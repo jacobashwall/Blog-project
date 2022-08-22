@@ -1,0 +1,28 @@
+
+.App {
+  background-color: #171920;
+  text-align: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+/**/
+a, a:hover, a:focus, a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+@media all and (max-height: 700px ){
+  .App{
+    flex-direction: row ;
+    align-items: flex-start ;
+  }
+  body{
+    width: 100vw;
+  }
+}
+
+

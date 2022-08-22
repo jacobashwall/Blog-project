@@ -1,0 +1,20 @@
+.footer{
+    align-self: stretch;
+    background-color: #282c34;
+    color: black;
+    display: flex;
+    justify-content:  flex-start;
+    font-family: cursive;
+    font-size: 0.7vw;
+    margin-top: 5%;
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 1%;
+    flex-direction: column;
+}
+
+@media all and (max-height: 700px ){
+    .footer{
+        margin: 0%;
+    }
+  }

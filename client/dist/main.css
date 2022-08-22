@@ -1,0 +1,286 @@
+
+.App {
+  background-color: #171920;
+  text-align: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+/**/
+a, a:hover, a:focus, a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+@media all and (max-height: 700px ){
+  .App{
+    flex-direction: row ;
+    align-items: flex-start ;
+  }
+  body{
+    width: 100vw;
+  }
+}
+
+
+
+.toolBar {
+    align-self: stretch;
+    background-color: #282c34;
+    align-content: right;
+    color: white;
+    display: flex;
+    justify-content: flex-end;
+    font-family: monospace;
+    font-size: 2vw;
+    margin-bottom: 2%;
+  }
+  
+  .toolBar>a{
+    flex-grow: 2;
+    width: 0;
+    min-width: 10vw;
+    box-shadow: -3px 3px black;
+    border-radius: 10px;
+    border: black solid 1px;
+    background-color: #282c34;
+    text-shadow: 2px 2px black;
+    padding-top: 1%;
+    text-align: center;
+  }
+  
+  .toolBar>a:hover{
+    transform: scale(1.1);
+    box-shadow: -4px 4px black;
+  }
+  
+  .toolBar> a:first-child:hover >img{
+    animation: rotation 2s infinite linear;
+  
+  }
+  
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
+  
+  .settings-icon{
+    width: 3vw;
+    height: 3vw;
+  }
+
+  .gap{
+    flex-grow: 14;
+  }
+
+  
+  @media all and (max-height: 700px ){
+    .toolBar{
+        flex-direction: column;
+        justify-content: flex-start;
+        font-size: calc(2vh+2vw);
+      }
+      .gap{
+        flex-grow:0;
+      }
+
+      .toolBar > a{
+        flex-grow: 0;
+        padding-bottom: 10%;
+        padding-top: 10%;
+        padding-right: none;
+        padding-left: none;
+      }
+ }
+
+  
+
+.site-header{
+  font-size:80px;
+  margin-top: 0%;
+}
+
+.LoginBox {
+  align-self: stretch;
+  border: grey 3px solid;
+  border-radius: 60px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  margin: auto;
+  background-color: #282c34;
+  box-shadow: 4px 4px #888888;
+}
+
+.login-header {
+  text-align: left;
+  font-size: 20px;
+  margin-bottom: 0px;
+  margin-left: 15%;
+  align-self: flex-start;
+  text-shadow: 2px 2px black;
+}
+
+input {
+  font-size: 15px;
+  background-color: #171920;
+  border-radius: 10px;
+}
+
+.password-line {
+  margin-top: none;
+  margin-left: 10%;
+}
+
+.eye-icon {
+  width: 20px;
+  height: 15px;
+  margin-left: 0.5vw;
+}
+
+.eye-icon:hover {
+  transform: scale(1.5);
+}
+
+.loginButton {
+  font-family: monospace;
+  font-size: 30px;
+  align-self: flex-end;
+  margin-right: 17%;
+  background-color: #282c34;
+  border: #888888 solid 1px;
+  border-radius: 10px;
+  color: white;
+  box-shadow: 3px 3px #888888;
+  text-shadow: 1px 1px black;
+}
+
+.loginButton:hover {
+  transform: scale(1.05);
+  box-shadow: 3.5px 3.5px #888888;
+}
+
+
+.Login>a {
+  font-size: 12px;
+  color: #0074e0;
+  text-shadow: 1px 1px black;
+}
+
+.register {
+  border-top: white dashed 2px;
+  margin: none;
+  font-size: 20px;
+}
+
+.register-link {
+  color: #0074e0;
+  text-shadow: 1px 1px black;
+}
+
+
+@media all and (max-height: 700px) {
+  .Login {
+    margin: auto;
+  }
+}
+
+@media all and (max-width: 700px) {
+  .site-header{
+    font-size: 11vw;
+  }
+  
+  .Login {
+    width: 40vw;
+  }
+
+  .login-header {
+    font-size: 2.75vw;
+  }
+
+  input {
+    font-size: 2.0625vw;
+  }
+
+  .eye-icon {
+    width: 2.75vw;
+    height: 2.0625vw;
+  }
+
+  .Login>a {
+    font-size: 1.65vw;
+  }
+
+  .loginButton {
+    font-size: 4.125vw;
+  }
+
+  .register {
+    font-size: 2.75vw;
+  }
+
+}
+.header404{
+    font-size: 10vw;
+}
+.register-box {
+    align-self: stretch;
+    border: grey 3px solid;
+    border-radius: 60px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    margin: auto;
+    background-color: #282c34;
+    box-shadow: 4px 4px #888888;
+    padding: 5%;
+    height:300px;
+  }
+
+
+  .birth-date{
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+  }
+  .birth-date :nth-child(1){
+    width:15%; 
+  }
+  .birth-date :nth-child(2){
+    width:15%; 
+  }
+  .birth-date :nth-child(3){
+    width:30%; 
+  }
+.footer{
+    align-self: stretch;
+    background-color: #282c34;
+    color: black;
+    display: flex;
+    justify-content:  flex-start;
+    font-family: cursive;
+    font-size: 0.7vw;
+    margin-top: 5%;
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 1%;
+    flex-direction: column;
+}
+
+@media all and (max-height: 700px ){
+    .footer{
+        margin: 0%;
+    }
+  }

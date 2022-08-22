@@ -1,0 +1,35 @@
+.register-box {
+  align-self: stretch;
+  border: grey 3px solid;
+  border-radius: 60px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 250px;
+  margin: auto;
+  background-color: #282c34;
+  box-shadow: 4px 4px #888888;
+  padding: 5%;
+  height: 300px;
+}
+
+
+.birth-date {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.birth-date :nth-child(1) {
+  width: 20%;
+}
+
+.birth-date :nth-child(2) {
+  width: 20%;
+}
+
+.birth-date :nth-child(3) {
+  width: 30%;
+}
