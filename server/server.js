@@ -23,6 +23,7 @@ const transporter = nodemailer.createTransport({
     user: "reactappjs@zohomail.com",
     pass: "nZP*JL2@x2Ghr9W"
   },
+  
   tls: {
     rejectUnauthorized: false
   },
