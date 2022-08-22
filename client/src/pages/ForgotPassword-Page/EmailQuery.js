@@ -4,7 +4,7 @@ const axios=require("axios");
 function EmailQuery(props) {
     const [email, setEmail] = useState(props.email);
     const [emailColor, seEmailColor] = useState("grey");
-    const url = "http://localhost:5000"
+    const url = SERVER_URL;
     function nextStep() {
         if (/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {// - /^[a-zA-Z_](\.[0-9a-zA-Z_])*@([a-z])+\.((co\.([a-z]{2})) | com)$/ why wont work?
             axios.post(`${url}/forgot-password-email-check`,

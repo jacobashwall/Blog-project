@@ -3,7 +3,7 @@ import './LoginBox.css'
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 const axios=require("axios")
-const url = "http://localhost:5000"
+const url = SERVER_URL;
 const LoginBox = () => {
   const [userName, setUserName] = useState("User Name");
   const [password, setPassword] = useState("Password");

@@ -1,66 +1,70 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const webpack = require('webpack');
 
 
 module.exports = {
-  // Where files should be sent once they are bundled
-  output: {
-    path: path.join(__dirname, '/dist'),
-    filename: 'index.bundle.js'
-  },
-  // webpack 5 comes with devServer which loads in development mode
- devServer: {
-   port: 3000,
-   static : false,
-   historyApiFallback: true,
- },
-  // Rules of how webpack will take our files, complie & bundle them for the browser 
-  module: {
-        
-    rules: [
+    // Where files should be sent once they are bundled
+    output: {
+        path: path.join(__dirname, '/dist'),
+        filename: 'index.bundle.js'
+    },
+    // webpack 5 comes with devServer which loads in development mode
+    devServer: {
+        port: 3000,
+        static: false,
+        historyApiFallback: true,
+    },
+    // Rules of how webpack will take our files, complie & bundle them for the browser 
+    module: {
 
-        {
-          test: /\.js$/,
-          exclude: /node_modules/,
-          use: {
-              loader: "babel-loader",
-          }
-        },
+        rules: [
 
-        {
-            test: /\.css$/i,
-            exclude: /node_modules/,
-            use: [MiniCssExtractPlugin.loader,'css-loader']
-          },
-
-        {
-            test: /\.(jpg|jpeg|gif|png)$/,
-            use: {
-                loader: 'file-loader',
-                options: {
-                    name: '[name].[ext]',
-                    publicPath: 'images',
-                    outputPath: 'images',
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
                 }
-            }
-        },
+            },
 
-        {
-            test: /\.(eot|ttf|woff|woff2)$/,
-            use: {
-                loader: 'file-loader',
-                options: {
-                    name: '[name].[ext]',
-                    publicPath: 'fonts',
-                    outputPath: 'fonts',
+            {
+                test: /\.css$/i,
+                exclude: /node_modules/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader']
+            },
+
+            {
+                test: /\.(jpg|jpeg|gif|png)$/,
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        publicPath: 'images',
+                        outputPath: 'images',
+                    }
                 }
-            }
-        },
-    ]
-,
-},
- plugins: [new HtmlWebpackPlugin({ template: './src/index.html' }), new MiniCssExtractPlugin()],
+            },
+
+            {
+                test: /\.(eot|ttf|woff|woff2)$/,
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        publicPath: 'fonts',
+                        outputPath: 'fonts',
+                    }
+                }
+            },
+        ]
+        ,
+    },
+    plugins: [new HtmlWebpackPlugin({ template: './src/index.html' }),
+    new MiniCssExtractPlugin(),
+    new webpack.DefinePlugin({ SERVER_URL: JSON.stringify('http://localhost:5000')}),
+    ],
 }
 
 /*

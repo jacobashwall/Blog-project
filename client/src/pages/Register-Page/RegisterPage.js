@@ -26,7 +26,7 @@ function RegisterPage() {
     setStep(step - 1);
   }
 
-  const url = "http://localhost:5000"
+  const url = SERVER_URL
   function submitInfo() {
     let date=new Date(birthDateYear,birthDateMonth,birthDateDay);
     axios.post(`${url}/new-user`,

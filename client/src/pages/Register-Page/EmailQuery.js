@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 const axios=require("axios")
-const url = "http://localhost:5000"
+const url = SERVER_URL
 
 function EmailQuery(props) {
     const [emailColor, seEmailColor] = useState("grey");

@@ -4,7 +4,7 @@ const axios = require("axios");
 function VerifyAccount(props) {
   const [verificationCode, setVarificationCode] = useState("Verification Code");
   const [codeColor, setCodeColor] = useState("grey");
-  const url = "http://localhost:5000"
+  const url = SERVER_URL
 
   useEffect(() => {
    sendMail();

@@ -7,7 +7,7 @@ function PasswordQuery(props) {
   const [email,setEmail]=useState(props.email)
   const [password1, setPassword1] = useState(props.password);
   const [password2, setPassword2] = useState(props.password);
-  const url = "http://localhost:5000";
+  const url = SERVER_URL;
   let navigate = useNavigate();
 
   function changePassword(props) {

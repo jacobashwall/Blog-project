@@ -6,7 +6,7 @@ function VerifyAccount(props) {
   const [verificationCode, setVarificationCode] = useState("Verification Code");
   const [codeColor, setCodeColor] = useState("grey");
   const [isHuman, setIsHuman] = useState(false);
-  const url = "http://localhost:5000";
+  const url = SERVER_URL;
   const captchaSiteKey = "6Ld9CJchAAAAAAilSyF7kvbpzM8nrVsbmgWpmgYq";
 
   const onVerify = (recaptchaResponse) => {
