@@ -63,7 +63,12 @@ module.exports = {
     },
     plugins: [new HtmlWebpackPlugin({ template: './src/index.html' }),
     new MiniCssExtractPlugin(),
-    new webpack.DefinePlugin({ SERVER_URL: JSON.stringify('http://localhost:5000')}),
+
+    //replaces global variables with text.
+    new webpack.DefinePlugin({
+        SERVER_URL: JSON.stringify('http://localhost:5000'),
+
+    }),
     ],
 }
 
