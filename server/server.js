@@ -1,17 +1,18 @@
 //nodejs setup
 const path = require('path');
 const fs = require('fs');
-const axios = require('axios');
 //express setup
 const express = require("express");
 const app = express();
+app.listen(5000, () => { console.log("server is running on port 5000") })
 //database setup - mongodb
 const mongoose = require("mongoose");
 const User = require("./models/Usermodel")
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://Ashwalls:209783349@cluster0.6ro0qol.mongodb.net/?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-const collection = client.db("React-application").collection("Users");
+const Blog = require("./models/Blogmodel")
+const uri = "mongodb+srv://Ashwalls:209783349@cluster0.6ro0qol.mongodb.net/Blog-Project-DB?retryWrites=true&w=majority";
+mongoose.connect(uri,{ useNewUrlParser: true, useUnifiedTopology: true }, err => {
+      console.log('connected to mongodb')
+  });
 //email setup - nodemail, sjcl, handlebars
 const sjcl = require('sjcl');
 const nodemailer = require("nodemailer");
@@ -23,17 +24,12 @@ const transporter = nodemailer.createTransport({
     user: "reactappjs@zohomail.com",
     pass: "nZP*JL2@x2Ghr9W"
   },
-  
+
   tls: {
     rejectUnauthorized: false
   },
 });
 const handlebars = require("handlebars");
-
-//server setup- connect to db and to port
-client.connect(err => {
-  app.listen(5000, () => { console.log("server connected to mongodb atlas database and running on port 5000") })
-});
 //helps with cross origin, change the headers of the html fiel returning from server (CORS)
 app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -55,6 +51,49 @@ app.get("/api", (req, res) => {
   res.json({ "users": ["server is connected"] })
 })
 
+/*
+const newBlog = new Blog({
+  header: "header2",
+  subheader: "subheader2",
+  author: "author2",
+  date: Date.now(),
+  body: [{
+    title: "bodytitle1",
+    image: null,
+    description: "bodydescription1",
+    text: "bodytext1"
+  },
+  {
+    title: "bodytitle2",
+    image: null,
+    description: "bodydescription2",
+    text: "bodytext2"
+  }],
+  likes: 0,
+  dislikes: 0,
+  comments: [{
+    title: "commentstitle1",
+    author: "commentsauthor1",
+    date: Date.now(),
+    body: "commentsbody1",
+    likes: 1,
+    dislikes: 1
+  },
+  {
+    title: "commentstitle2",
+    author: "commentsauthor2",
+    date: Date.now(),
+    body: "commentsbody2",
+    likes: 2,
+    dislikes: 2
+  }]
+});
+
+newBlog.save();
+
+*/
+
+
 app.post("/new-user", (req, res) => {
   const newUser = new User({
     username: req.body.username,
@@ -63,11 +102,11 @@ app.post("/new-user", (req, res) => {
     doMail: req.body.doMail,
     birthDate: req.body.birthDate
   });
-  collection.insertOne(newUser);
+  newUser.save();
 })
 
 app.post("/new-user-username-check", (req, res) => {
-  collection.findOne({ username: req.body.username }, (err, doc) => {
+  User.findOne({ username: req.body.username }, (err, doc) => {
     if (doc) {
       res.send("true")
     }
@@ -79,7 +118,7 @@ app.post("/new-user-username-check", (req, res) => {
 })
 
 app.post("/new-user-email-check", (req, res) => {
-  collection.findOne({ email: req.body.email }, (err, doc) => {
+  User.findOne({ email: req.body.email }, (err, doc) => {
     if (doc) {
       res.send("true")
     }
@@ -129,7 +168,7 @@ app.post("/email-verification-check-code", (req, res) => {
 })
 
 app.post("/login-check", (req, res) => {
-  collection.findOne({ username: req.body.username }, (err, doc) => {
+  User.findOne({ username: req.body.username }, (err, doc) => {
     if (doc) {
       if (doc.password == req.body.password) {
         res.send("true")
@@ -146,7 +185,7 @@ app.post("/login-check", (req, res) => {
 })
 
 app.post("/forgot-password-email-check", (req, res) => {
-  collection.findOne({ email: req.body.email }, (err, doc) => {
+  User.findOne({ email: req.body.email }, (err, doc) => {
     if (doc) {
       res.send(doc.username)
     }
@@ -158,7 +197,7 @@ app.post("/forgot-password-email-check", (req, res) => {
 })
 
 app.post("/forgot-password-send-code", (req, res) => {
-  collection.findOne({ email: req.body.email }, (err, doc) => {
+  User.findOne({ email: req.body.email }, (err, doc) => {
     const filePath = path.join(__dirname, './emails/forgotPassword.html');
     const source = fs.readFileSync(filePath, 'utf-8').toString();
     const forgotPasswordTamplate = handlebars.compile(source);
@@ -188,7 +227,7 @@ app.post("/forgot-password-send-code", (req, res) => {
 )
 
 app.post("/forgot-password-check-code", (req, res) => {
-  collection.findOne({ email: req.body.email }, (err, doc) => {
+  User.findOne({ email: req.body.email }, (err, doc) => {
     const string = doc.username + doc.email + doc.password;
     const bitArray = sjcl.hash.sha256.hash(string);
     const code = sjcl.codec.hex.fromBits(bitArray).slice(0, 8);
@@ -200,6 +239,14 @@ app.post("/forgot-password-check-code", (req, res) => {
 })
 
 app.post("/forgot-password-change-password", (req, res) => {
-  collection.findOneAndUpdate({ email: req.body.email }, { $set: { password: req.body.password } })
+  User.updateOne({email: req.body.email}, 
+    {password: req.body.password}, function (err, docs) {
+    if (err){
+        console.log(err)
+    }
+    else{
+        console.log("Updated Docs : ", docs);
+    }
+});
 })
 

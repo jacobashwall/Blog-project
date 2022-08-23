@@ -28,9 +28,10 @@ const LoginBox = () => {
             setUserNameColor("firebrick")
           }
           if (pass == "incorrect password") {
-            setSeenPassword("Incorrect password");
-            setPassword("")
+            setPassword("Incorrect password")
             setPasswordColor("firebrick")
+            const input = document.querySelector(".password-input"); 
+            input.setAttribute("type", "text"); 
           }
         }
       })
@@ -46,7 +47,7 @@ const LoginBox = () => {
       </p>
       <p className='login-header'>Password:</p>
       <p className='password-line'>
-        <input className='password-input' type='password' onChange={e => { setPassword(e.target.value); setPasswordColor('white') }} value={password} onFocus={e => { if (password === "Password" || password === "Incorrect password") setPassword("") }} onBlur={e => { if (e.target.value === "") { setPassword("Password"); setPasswordColor('grey') } }} style={{ color: passwordColor }}></input>
+        <input className='password-input' type='password'  onMouseEnter={() => { const input = document.querySelector(".password-input"); input.setAttribute("type", "password"); }} onChange={e => { setPassword(e.target.value); setPasswordColor('white') }} value={password} onFocus={e => { if (password === "Password" || password === "Incorrect password") setPassword("") }} onBlur={e => { if (e.target.value === "") { setPassword("Password"); setPasswordColor('grey') } }} style={{ color: passwordColor }}></input>
         <img onMouseEnter={() => { const input = document.querySelector(".password-input"); input.setAttribute("type", "text"); }} onMouseLeave={() => { const input = document.querySelector(".password-input"); input.setAttribute("type", "password"); }} src={eyeIcon} className="eye-icon" alt="" />
       </p>
       <button className="loginButton" onClick={login}>Login</button>
