@@ -15,33 +15,39 @@ import axios from 'axios';
 
 function App() {
   const [backendData, setBackendData] = useState(undefined)
+  const [images,setImages]=useState([])
   const url= SERVER_URL;
-  
 
-  useEffect(() => {
-    getUsers();
-  },[])
-
-  const getUsers =() => {
-    axios.get(`${url}/api`)
+  const getImages =() => {
+    axios.get(`${url}/images`)
       .then((response) => {
-        const users=response.data.users;
-        setBackendData(users);
+        setImages(response.data);
       })
       .catch((error) => {
         console.error(`ERROR: ${error}`);
       });
   }
 
+  useEffect(() => {
+    getImages();
+  },[])
+
+
+
   return (
     <div className="App">
       <Toolbar />
 
-      {( backendData == undefined) ?
-        (<p>Lodaing...</p>) :
-        (backendData.map((user, i) => (
-          <p key={i}>{user}</p>)
-        ))}
+
+{
+  images.map((image)=>{
+    const base64String=btoa(new Uint8Array(image.img.data.data).reduce(function (data, byte) {
+        return data + String.fromCharCode(byte);
+    }, ''));
+    
+    return <img key={image._id} src={`data:image/png;base64,${base64String}`} width='50%'/>
+  })
+}
         
 
       <Router>

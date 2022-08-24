@@ -5,14 +5,35 @@ const fs = require('fs');
 const express = require("express");
 const app = express();
 app.listen(5000, () => { console.log("server is running on port 5000") })
-//database setup - mongodb
+//database setup - mongoose, multer
 const mongoose = require("mongoose");
 const User = require("./models/Usermodel")
 const Blog = require("./models/Blogmodel")
+const Image = require('./models/Imagemodel');
 const uri = "mongodb+srv://Ashwalls:209783349@cluster0.6ro0qol.mongodb.net/Blog-Project-DB?retryWrites=true&w=majority";
-mongoose.connect(uri,{ useNewUrlParser: true, useUnifiedTopology: true }, err => {
-      console.log('connected to mongodb')
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, err => {
+  console.log('connected to mongodb')
+});
+const multer = require('multer');
+const Storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads')
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname)
+  }
+});
+const upload = multer({ storage: Storage });
+app.post('/upload', upload.single("testImage"), (req, res) => {
+  const saveImage = new Image({
+    name: req.body.name,
+    img: {
+      data: fs.readFileSync('uploads/' + req.file.filename),
+      contentType: "image/png"
+    }
   });
+  saveImage.save().then((res) => console.log('image is saved')).catch((err) => console.log(err));
+})
 //email setup - nodemail, sjcl, handlebars
 const sjcl = require('sjcl');
 const nodemailer = require("nodemailer");
@@ -239,14 +260,18 @@ app.post("/forgot-password-check-code", (req, res) => {
 })
 
 app.post("/forgot-password-change-password", (req, res) => {
-  User.updateOne({email: req.body.email}, 
-    {password: req.body.password}, function (err, docs) {
-    if (err){
+  User.updateOne({ email: req.body.email },
+    { password: req.body.password }, function (err, docs) {
+      if (err) {
         console.log(err)
-    }
-    else{
+      }
+      else {
         console.log("Updated Docs : ", docs);
-    }
-});
+      }
+    });
 })
 
+app.get('/images',async (req,res)=>{
+  const allData=await Image.find();
+  res.json(allData);
+})
