@@ -14,42 +14,9 @@ import axios from 'axios';
 
 
 function App() {
-  const [backendData, setBackendData] = useState(undefined)
-  const [images,setImages]=useState([])
-  const url= SERVER_URL;
-
-  const getImages =() => {
-    axios.get(`${url}/images`)
-      .then((response) => {
-        setImages(response.data);
-      })
-      .catch((error) => {
-        console.error(`ERROR: ${error}`);
-      });
-  }
-
-  useEffect(() => {
-    getImages();
-  },[])
-
-
-
   return (
     <div className="App">
       <Toolbar />
-
-
-{
-  images.map((image)=>{
-    const base64String=btoa(new Uint8Array(image.img.data.data).reduce(function (data, byte) {
-        return data + String.fromCharCode(byte);
-    }, ''));
-    
-    return <img key={image._id} src={`data:image/png;base64,${base64String}`} width='50%'/>
-  })
-}
-        
-
       <Router>
         <Routes>
           <Route path='/Settings' element={<SettingsPage />} />

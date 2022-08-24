@@ -24,16 +24,6 @@ const Storage = multer.diskStorage({
   }
 });
 const upload = multer({ storage: Storage });
-app.post('/upload', upload.single("testImage"), (req, res) => {
-  const saveImage = new Image({
-    name: req.body.name,
-    img: {
-      data: fs.readFileSync('uploads/' + req.file.filename),
-      contentType: "image/png"
-    }
-  });
-  saveImage.save().then((res) => console.log('image is saved')).catch((err) => console.log(err));
-})
 //email setup - nodemail, sjcl, handlebars
 const sjcl = require('sjcl');
 const nodemailer = require("nodemailer");
@@ -271,6 +261,16 @@ app.post("/forgot-password-change-password", (req, res) => {
     });
 })
 
+app.post('/upload', upload.single("image"), (req, res) => {
+  const saveImage = new Image({
+    name: req.body.name,
+    img: {
+      data: fs.readFileSync('uploads/' + req.file.filename),
+      contentType: "image/png"
+    }
+  });
+  saveImage.save().then((res) => console.log('image is saved')).catch((err) => console.log(err));
+})
 app.get('/images',async (req,res)=>{
   const allData=await Image.find();
   res.json(allData);
