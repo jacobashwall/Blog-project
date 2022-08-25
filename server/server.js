@@ -267,11 +267,32 @@ app.post('/upload', upload.single("image"), (req, res) => {
     img: {
       data: fs.readFileSync('uploads/' + req.file.filename),
       contentType: "image/png"
-    }
+    },
+    desc: req.body.description,
+    uploader: req.body.uploader
   });
   saveImage.save().then((res) => console.log('image is saved')).catch((err) => console.log(err));
 })
-app.get('/images',async (req,res)=>{
-  const allData=await Image.find();
+
+app.get('/get-all-images', async (req, res) => {
+  const allData = await Image.find();
   res.json(allData);
+})
+
+app.post("/get-images-by-user", async (req, res) => {
+  const allData = await Image.find({ uploader: req.body.username });
+  res.json(allData);
+})
+
+app.post("/get-images-by-id", async (req, res) => {
+  try{
+  const allData = await Image.findOne({ _id: new mongoose.Types.ObjectId(req.body.id) });
+  if (allData)
+    res.json(allData);
+  else
+    res.send(null)
+  }
+  catch{
+    res.send(null)
+  }
 })
