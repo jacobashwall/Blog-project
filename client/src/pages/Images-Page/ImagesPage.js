@@ -27,9 +27,7 @@ function ImagesPage() {
   const getImagesById = () => {
     axios.post(`${url}/get-images-by-id`, { id: imageId })
       .then((response) => {
-        console.log(response.data);
         if (response.data) {
-          console.log("problem")
           const base64String = btoa(new Uint8Array(response.data.img.data.data).reduce(function (data, byte) {
             return data + String.fromCharCode(byte);
           }, ''));
