@@ -1,16 +1,7 @@
 import React, { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
 
-function BlogPage() {
-    let { username } = useParams();
-    const [blogBody, setBlog] = useState(
-        [{
-            title: "Title",
-            imageId: "Image ID",
-            description: "Image Description",
-            text: "Text"
-        },]
-    );
+function BlogBody(props) {
+    const [blogBody, setBlog] = useState([]);
 
     const addSection = () => {
         setBlog(current => [...current,
@@ -80,13 +71,8 @@ function BlogPage() {
         );
     };
 
-    let navigate = useNavigate();
-    const navigateToImages = () => {
-        navigate(`../Images/${username}`)
-    }
     return (
         <div>
-            <h1>BlogPage of {username}</h1>
             {
                 blogBody.map((section, key) => {
                     return (
@@ -131,9 +117,8 @@ function BlogPage() {
             <button onClick={removeSection} disabled={blogBody.length==1}>remove section</button>
             <button onClick={addSection}>add section</button>
             <br></br>
-            <button onClick={navigateToImages}>my images</button>
         </div>
     )
 }
 
-export default BlogPage
+export default BlogBody

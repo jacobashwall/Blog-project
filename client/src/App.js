@@ -8,10 +8,12 @@ import AboutUsPage from './pages/AboutUs-Page/AboutUsPage';
 import SettingsPage from './pages/Settings-Page/SettingsPage';
 import ForgotPasswordPage from './pages/ForgotPassword-Page/ForgotPasswordPage';
 import ImagesPage from './pages/Images-Page/ImagesPage';
-import BlogPage from './pages/Blog-Page/BlogPage';
+import EditBlogPage from './pages/Edit-Blog-Page/EditBlogPage';
+import ViewBlogPage from './pages/View-Blog-Page/ViewBlogPage';
 import Footer from './Footer';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import MainPage from './pages/Main-Page/MainPage';
 
 
 
@@ -21,13 +23,15 @@ function App() {
       <Toolbar />
       <Router>
         <Routes>
-          <Route path='/Settings' element={<SettingsPage />} />
           <Route path='/' element={<LoginPage />} />
+          <Route path='/Settings' element={<SettingsPage />} />
           <Route path='/Register' element={<RegisterPage />} />
           <Route path='/About-Us' element={<AboutUsPage />} />
           <Route path='/Forgot-my-password' element={<ForgotPasswordPage />} />
-          <Route path='/Blog/:username' element={<BlogPage />} />
-          <Route path='/Images/:username' element={<ImagesPage />} />
+          <Route path='/:username/Main' element={<MainPage />} />
+          <Route path='/:username/:blogId/Edit' element={<EditBlogPage />} />
+          <Route path='/:username/:blogId/View' element={<ViewBlogPage />} />
+          <Route path='/:username/Images' element={<ImagesPage />} />
           <Route path=':page' element={<ErrorPage />} />
         </Routes>
       </Router>

@@ -5,27 +5,27 @@ import { useNavigate } from 'react-router-dom';
 const axios = require("axios")
 const url = SERVER_URL;
 const LoginBox = () => {
-  const [userName, setUserName] = useState("User Name");
+  const [username, setUsername] = useState("User Name");
   const [password, setPassword] = useState("Password");
-  const [userNameColor, setUserNameColor] = useState("grey");
+  const [usernameColor, setUsernameColor] = useState("grey");
   const [passwordColor, setPasswordColor] = useState("grey");
   let navigate = useNavigate();
   function login() {
     axios.post(`${url}/login-check`,
       {
-        username: userName,
+        username: username,
         password: password
       })
       .then((response) => {
         let pass = response.data;
         console.log(pass);
         if (pass == true) {
-          navigate('/Blog/' + userName);
+          navigate(`./${username}/Main`);
         }
         else {
           if (pass == "username not found") {
-            setUserName("Username not found");
-            setUserNameColor("firebrick")
+            setUsername("Username not found");
+            setUsernameColor("firebrick")
           }
           if (pass == "incorrect password") {
             setPassword("Incorrect password")
@@ -43,7 +43,7 @@ const LoginBox = () => {
     <div className="LoginBox">
       <p className='login-header'>Username:</p>
       <p>
-        <input onChange={e => { setUserName(e.target.value); setUserNameColor('white') }} value={userName} onFocus={e => { if (userName === "User Name" || userName === "Username not found") setUserName("") }} onBlur={e => { if (e.target.value === "") { setUserName("User Name"); setUserNameColor('grey') } }} style={{ color: userNameColor }}></input>
+        <input onChange={e => { setUsername(e.target.value); setUsernameColor('white') }} value={username} onFocus={e => { if (username === "User Name" || username === "Username not found") setUsername("") }} onBlur={e => { if (e.target.value === "") { setUsername("User Name"); setUsernameColor('grey') } }} style={{ color: usernameColor }}></input>
       </p>
       <p className='login-header'>Password:</p>
       <p className='password-line'>

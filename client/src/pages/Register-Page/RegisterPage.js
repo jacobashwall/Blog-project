@@ -44,7 +44,7 @@ function RegisterPage() {
         console.log(error);
       });
     console.log("submit");
-    navigate("../Blog/"+username);
+    navigate(`../${username}/Main`);
   }
   const queries = [<UsernameQuery username={username} nextStep={nextStep} submitUsername={setUsername} />,
   <PasswordQuery password={password} nextStep={nextStep} previousStep={previousStep} submitPassword={setPassword} />,

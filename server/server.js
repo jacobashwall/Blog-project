@@ -62,49 +62,6 @@ app.get("/api", (req, res) => {
   res.json({ "users": ["server is connected"] })
 })
 
-/*
-const newBlog = new Blog({
-  header: "header2",
-  subheader: "subheader2",
-  author: "author2",
-  date: Date.now(),
-  body: [{
-    title: "bodytitle1",
-    image: null,
-    description: "bodydescription1",
-    text: "bodytext1"
-  },
-  {
-    title: "bodytitle2",
-    image: null,
-    description: "bodydescription2",
-    text: "bodytext2"
-  }],
-  likes: 0,
-  dislikes: 0,
-  comments: [{
-    title: "commentstitle1",
-    author: "commentsauthor1",
-    date: Date.now(),
-    body: "commentsbody1",
-    likes: 1,
-    dislikes: 1
-  },
-  {
-    title: "commentstitle2",
-    author: "commentsauthor2",
-    date: Date.now(),
-    body: "commentsbody2",
-    likes: 2,
-    dislikes: 2
-  }]
-});
-
-newBlog.save();
-
-*/
-
-
 app.post("/new-user", (req, res) => {
   const newUser = new User({
     username: req.body.username,
@@ -284,15 +241,44 @@ app.post("/get-images-by-user", async (req, res) => {
   res.json(allData);
 })
 
+app.post("/get-blogs-by-user", async (req, res) => {
+  const allData = await Blog.find({ author: req.body.username });
+  res.json(allData);
+})
+
 app.post("/get-images-by-id", async (req, res) => {
-  try{
-  const allData = await Image.findOne({ _id: new mongoose.Types.ObjectId(req.body.id) });
-  if (allData)
-    res.json(allData);
-  else
+  try {
+    const allData = await Image.findOne({ _id: new mongoose.Types.ObjectId(req.body.id) });
+    if (allData)
+      res.json(allData);
+    else
+      res.send(null)
+  }
+  catch {
     res.send(null)
   }
-  catch{
-    res.send(null)
-  }
+})
+app.post("/get-blog-by-id", async (req, res) => {
+  const allData = await Blog.findOne({ _id: new mongoose.Types.ObjectId(req.body.id) });
+  res.json(allData);
+
+})
+app.post("/new-blog", (req, res) => {
+  const newBlog = new Blog({
+    header: "New blog",
+    subheader: "A fresh new blog for you!",
+    author: req.body.username,
+    date: Date.now(),
+    body: [{
+      title: "Title",
+      imageId: "Image ID",
+      description: "Image Description",
+      text: "Text"
+    }],
+    likes: 0,
+    dislikes: 0,
+    comments: []
+  });
+  newBlog.save();
+  res.send(newBlog);
 })
