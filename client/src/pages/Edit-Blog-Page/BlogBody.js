@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 function BlogBody(props) {
-    const [blogBody, setBlog] = useState([]);
+    const [blogBody, setBlog] = useState(props.blogBody);
 
     const addSection = () => {
         setBlog(current => [...current,
@@ -71,6 +71,10 @@ function BlogBody(props) {
         );
     };
 
+    function updateBlogBody(){
+        props.updateBlog(curr => ({...curr,body: blogBody}))
+    }
+
     return (
         <div>
             {
@@ -80,7 +84,7 @@ function BlogBody(props) {
                             <label>section {key}</label>
                             <br></br>
                             <input
-                                onChange={e => { updateSectionTitle(key, e.target.value); }}
+                                onChange={e => { updateSectionTitle(key, e.target.value);updateBlogBody(); }}
                                 value={section.title}
                                 onFocus={e => { if (section.title === "Title") updateSectionTitle(key, "") }}
                                 onBlur={e => { if (e.target.value === "") { updateSectionTitle(key, "Title"); } }}
@@ -88,7 +92,7 @@ function BlogBody(props) {
                             </input>
                             <br></br>
                             <input
-                                onChange={e => { updateSectionImageId(key, e.target.value); }}
+                                onChange={e => { updateSectionImageId(key, e.target.value);updateBlogBody(); }}
                                 value={section.imageId}
                                 onFocus={e => { if (section.imageId === "Image ID") updateSectionImageId(key, "") }}
                                 onBlur={e => { if (e.target.value === "") { updateSectionImageId(key, "Image ID"); } }}
@@ -96,7 +100,7 @@ function BlogBody(props) {
                             </input>
                             <br></br>
                             <textarea
-                                onChange={e => { updateSectionDescription(key, e.target.value); }}
+                                onChange={e => { updateSectionDescription(key, e.target.value);updateBlogBody(); }}
                                 value={section.description}
                                 onFocus={e => { if (section.description === "Image Description") updateSectionDescription(key, "") }}
                                 onBlur={e => { if (e.target.value === "") { updateSectionDescription(key, "Image Description"); } }}
@@ -104,7 +108,7 @@ function BlogBody(props) {
                             </textarea>
                             <br></br>
                             <textarea
-                                onChange={e => { updateSectionText(key, e.target.value); }}
+                                onChange={e => { updateSectionText(key, e.target.value);updateBlogBody(); }}
                                 value={section.text}
                                 onFocus={e => { if (section.text === "Text") updateSectionText(key, "") }}
                                 onBlur={e => { if (e.target.value === "") { updateSectionText(key, "Text"); } }}

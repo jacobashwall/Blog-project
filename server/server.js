@@ -263,6 +263,27 @@ app.post("/get-blog-by-id", async (req, res) => {
   res.json(allData);
 
 })
+
+app.post("/edit-blog-by-id", async (req, res) => {
+  let updatedBlog = req.body.updatedBlog;
+  Blog.findByIdAndUpdate(req.body.id,
+    {
+      $set: {
+        header: updatedBlog.header,
+        subheader: updatedBlog.subheader,
+        date: Date.now(),
+        body: updatedBlog.body
+      }
+    },
+    function(err, doc){
+      if(err){
+        console.log("Something wrong when updating data!");
+      }
+      console.log(doc);
+      }
+  );
+})
+
 app.post("/new-blog", (req, res) => {
   const newBlog = new Blog({
     header: "New blog",
