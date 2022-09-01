@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
+const axios=require("axios")
 
 function BlogBody(props) {
-    const [blogBody, setBlog] = useState(props.blogBody);
+    const [blogBody, setBlogBody] = useState(props.blogBody);
+    const url = SERVER_URL;
 
     const addSection = () => {
-        setBlog(current => [...current,
+        setBlogBody(current => [...current,
         {
             title: "Title",
             imageId: "Image ID",
@@ -14,8 +16,8 @@ function BlogBody(props) {
     };
 
     const updateSectionTitle = (givenKey, givenTitle) => {
-        setBlog(current =>
-            current.map((obj,key) => {
+        setBlogBody(current =>
+            current.map((obj, key) => {
                 if (key === givenKey) {
                     return { ...obj, title: givenTitle };
                 }
@@ -26,8 +28,8 @@ function BlogBody(props) {
     };
 
     const updateSectionImageId = (givenKey, givenId) => {
-        setBlog(current =>
-            current.map((obj,key) => {
+        setBlogBody(current =>
+            current.map((obj, key) => {
                 if (key === givenKey) {
                     return { ...obj, imageId: givenId };
                 }
@@ -38,8 +40,8 @@ function BlogBody(props) {
     };
 
     const updateSectionDescription = (givenKey, givenDescription) => {
-        setBlog(current =>
-            current.map((obj,key) => {
+        setBlogBody(current =>
+            current.map((obj, key) => {
                 if (key === givenKey) {
                     return { ...obj, description: givenDescription };
                 }
@@ -50,8 +52,8 @@ function BlogBody(props) {
     };
 
     const updateSectionText = (givenKey, givenText) => {
-        setBlog(current =>
-            current.map((obj,key) => {
+        setBlogBody(current =>
+            current.map((obj, key) => {
                 if (key === givenKey) {
                     return { ...obj, text: givenText };
                 }
@@ -63,16 +65,34 @@ function BlogBody(props) {
 
 
     const removeSection = () => {
-        let givenKey=blogBody.length-1;
-        setBlog(current =>
-            current.filter((obj,key) => {
+        let givenKey = blogBody.length - 1;
+        setBlogBody(current =>
+            current.filter((obj, key) => {
                 return key !== givenKey;
             }),
         );
     };
 
-    function updateBlogBody(){
-        props.updateBlog(curr => ({...curr,body: blogBody}))
+    function updateBlogBody() {
+        props.updateBlog(curr => ({ ...curr, body: blogBody }))
+    }
+
+    const isImageExist = (key) => {
+        console.log("click")
+        axios.post(`${url}/exist-images-by-id`, { id: blogBody[key].imageId })
+            .then((response) => {
+                console.log(response.data)
+                if (response.data) {
+                    console.log("Image Found")
+                }
+                else {
+                    updateSectionImageId(key, "No image match this ID");
+                }
+            })
+            .catch((error) => {
+                console.error(`ERROR: ${error}`);
+                updateSectionImageId("Error");
+            });
     }
 
     return (
@@ -84,7 +104,7 @@ function BlogBody(props) {
                             <label>section {key}</label>
                             <br></br>
                             <input
-                                onChange={e => { updateSectionTitle(key, e.target.value);updateBlogBody(); }}
+                                onChange={e => { updateSectionTitle(key, e.target.value); updateBlogBody(); }}
                                 value={section.title}
                                 onFocus={e => { if (section.title === "Title") updateSectionTitle(key, "") }}
                                 onBlur={e => { if (e.target.value === "") { updateSectionTitle(key, "Title"); } }}
@@ -92,15 +112,16 @@ function BlogBody(props) {
                             </input>
                             <br></br>
                             <input
-                                onChange={e => { updateSectionImageId(key, e.target.value);updateBlogBody(); }}
+                                onChange={e => { updateSectionImageId(key, e.target.value); updateBlogBody(); }}
                                 value={section.imageId}
                                 onFocus={e => { if (section.imageId === "Image ID") updateSectionImageId(key, "") }}
                                 onBlur={e => { if (e.target.value === "") { updateSectionImageId(key, "Image ID"); } }}
                                 style={{ color: "white" }}>
                             </input>
+                            <button onClick={()=>isImageExist(key)}>check</button>
                             <br></br>
                             <textarea
-                                onChange={e => { updateSectionDescription(key, e.target.value);updateBlogBody(); }}
+                                onChange={e => { updateSectionDescription(key, e.target.value); updateBlogBody(); }}
                                 value={section.description}
                                 onFocus={e => { if (section.description === "Image Description") updateSectionDescription(key, "") }}
                                 onBlur={e => { if (e.target.value === "") { updateSectionDescription(key, "Image Description"); } }}
@@ -108,7 +129,7 @@ function BlogBody(props) {
                             </textarea>
                             <br></br>
                             <textarea
-                                onChange={e => { updateSectionText(key, e.target.value);updateBlogBody(); }}
+                                onChange={e => { updateSectionText(key, e.target.value); updateBlogBody(); }}
                                 value={section.text}
                                 onFocus={e => { if (section.text === "Text") updateSectionText(key, "") }}
                                 onBlur={e => { if (e.target.value === "") { updateSectionText(key, "Text"); } }}
@@ -118,7 +139,7 @@ function BlogBody(props) {
                     )
                 })
             }
-            <button onClick={removeSection} disabled={blogBody.length==1}>remove section</button>
+            <button onClick={removeSection} disabled={blogBody.length == 1}>remove section</button>
             <button onClick={addSection}>add section</button>
             <br></br>
         </div>

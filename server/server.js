@@ -258,6 +258,21 @@ app.post("/get-images-by-id", async (req, res) => {
     res.send(null)
   }
 })
+
+app.post("/exist-images-by-id", async (req, res) => {
+  try {
+    const allData = await Image.exists({ _id: new mongoose.Types.ObjectId(req.body.id) });
+    console.log(allData)
+    if (allData)
+      res.send(allData);
+    else
+      res.send(null)
+  }
+  catch {
+    res.send(null)
+  }
+})
+
 app.post("/get-blog-by-id", async (req, res) => {
   const allData = await Blog.findOne({ _id: new mongoose.Types.ObjectId(req.body.id) });
   res.json(allData);
