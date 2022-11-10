@@ -14,14 +14,16 @@ import Footer from './Footer';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import MainPage from './pages/Main-Page/MainPage';
+import SearchPage from './pages/Search-Page/SearchPage';
 
 
 
 function App() {
   return (
     <div className="App">
-      <Toolbar />
+
       <Router>
+      <Toolbar />
         <Routes>
           <Route path='/' element={<LoginPage />} />
           <Route path='/Settings' element={<SettingsPage />} />
@@ -32,10 +34,11 @@ function App() {
           <Route path='/:username/:blogId/Edit' element={<EditBlogPage />} />
           <Route path='/:username/:blogId/View' element={<ViewBlogPage />} />
           <Route path='/:username/Images' element={<ImagesPage />} />
+          <Route path='/:username/Search/:tag' element={<SearchPage/>}/>
           <Route path=':page' element={<ErrorPage />} />
         </Routes>
+        <Footer />
       </Router>
-      <Footer />
     </div>
   );
 }
