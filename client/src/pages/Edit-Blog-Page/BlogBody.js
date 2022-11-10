@@ -101,8 +101,6 @@ function BlogBody(props) {
                 blogBody.map((section, key) => {
                     return (
                         <div key={key}>
-                            <label>section {key}</label>
-                            <br></br>
                             <input
                                 onChange={e => { updateSectionTitle(key, e.target.value); updateBlogBody(); }}
                                 value={section.title}

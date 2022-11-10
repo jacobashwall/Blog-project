@@ -31,12 +31,21 @@ function EditBlogPage() {
             console.error(`ERROR: ${error}`);
         });
     }
+    const updateHeader=(givenHeader)=>{
+        setBlog({header:givenHeader})
+    }
     return (
         <div>
             {
                 blog ?
                     (<div>
-                        <h1>EditBlogPage of {username}</h1>
+                        <input
+                                onChange={e => { updateHeader(e.target.value); }}
+                                value={blog.header}
+                                onFocus={e => { if (blog.header === "New blog") updateHeader("") }}
+                                onBlur={e => { if (e.target.value === "") { updateHeader("New blog"); } }}
+                                style={{ color: "white" }}>
+                            </input>
                         <BlogBody blogBody={blog.body} updateBlog={setBlog} />
                         <button onClick={() => { navigate(`../${username}/Images`); }}>my images</button>
                         <button onClick={updateBlog}>update</button>

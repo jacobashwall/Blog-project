@@ -11,7 +11,7 @@ function BlogBodyView(props) {
                 props.blogBody.map((section, key) => {
                     return (
                         <div key={key}>
-                            <h1>{section.title}</h1>
+                            <h3>{section.title}</h3>
                            <ViewImage imageId={section.imageId} sectionKey={key} /> 
                             <div>{section.description}</div>
                             <div>{section.text}</div>

@@ -26,7 +26,10 @@ function ViewBlogPage() {
         <div>
             {blog ?
                 (<div>
-                    <h1>ViewBlogPage BlogId: {blog._id} of {blog.author} </h1>
+                    <h1>{blog.header}</h1>
+                    <h2>{blog.subheader}</h2>
+                    <h3>{blog.author}</h3>
+                    <div>{blog.date}</div>
                     <BlogBodyView blogBody={blog.body}/>
                     <button disabled={blog.author != username} onClick={() => navigate(`../${blog.author}/${blog._id}/Edit`)}>Edit</button>
                 </div>)
