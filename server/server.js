@@ -297,6 +297,7 @@ app.post("/edit-blog-by-id", async (req, res) => {
       console.log(doc);
       }
   );
+  res.send("Sent")
 })
 
 app.post("/new-blog", (req, res) => {

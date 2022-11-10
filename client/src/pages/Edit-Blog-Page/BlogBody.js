@@ -107,7 +107,7 @@ function BlogBody(props) {
                                 onChange={e => { updateSectionTitle(key, e.target.value); updateBlogBody(); }}
                                 value={section.title}
                                 onFocus={e => { if (section.title === "Title") updateSectionTitle(key, "") }}
-                                onBlur={e => { if (e.target.value === "") { updateSectionTitle(key, "Title"); } }}
+                                onBlur={e => { if (e.target.value === "") { updateSectionTitle(key, "Title"); }; updateBlogBody(); }}
                                 style={{ color: "white" }}>
                             </input>
                             <br></br>
@@ -115,7 +115,7 @@ function BlogBody(props) {
                                 onChange={e => { updateSectionImageId(key, e.target.value); updateBlogBody(); }}
                                 value={section.imageId}
                                 onFocus={e => { if (section.imageId === "Image ID") updateSectionImageId(key, "") }}
-                                onBlur={e => { if (e.target.value === "") { updateSectionImageId(key, "Image ID"); } }}
+                                onBlur={e => { if (e.target.value === "") { updateSectionImageId(key, "Image ID"); }; updateBlogBody();  }}
                                 style={{ color: "white" }}>
                             </input>
                             <button onClick={()=>isImageExist(key)}>check</button>
@@ -124,7 +124,7 @@ function BlogBody(props) {
                                 onChange={e => { updateSectionDescription(key, e.target.value); updateBlogBody(); }}
                                 value={section.description}
                                 onFocus={e => { if (section.description === "Image Description") updateSectionDescription(key, "") }}
-                                onBlur={e => { if (e.target.value === "") { updateSectionDescription(key, "Image Description"); } }}
+                                onBlur={e => { if (e.target.value === "") { updateSectionDescription(key, "Image Description"); }; updateBlogBody(); }}
                                 style={{ color: "white", background: "transparent" }}>
                             </textarea>
                             <br></br>
@@ -132,7 +132,7 @@ function BlogBody(props) {
                                 onChange={e => { updateSectionText(key, e.target.value); updateBlogBody(); }}
                                 value={section.text}
                                 onFocus={e => { if (section.text === "Text") updateSectionText(key, "") }}
-                                onBlur={e => { if (e.target.value === "") { updateSectionText(key, "Text"); } }}
+                                onBlur={e => { if (e.target.value === "") { updateSectionText(key, "Text"); }; updateBlogBody();  }}
                                 style={{ color: "white", background: "transparent" }}>
                             </textarea>
                         </div>

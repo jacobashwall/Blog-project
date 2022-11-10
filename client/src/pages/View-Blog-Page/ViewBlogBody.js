@@ -12,7 +12,7 @@ function BlogBodyView(props) {
                     return (
                         <div key={key}>
                             <h1>{section.title}</h1>
-                           <ViewImage imageId={section.imageId} /> 
+                           <ViewImage imageId={section.imageId} sectionKey={key} /> 
                             <div>{section.description}</div>
                             <div>{section.text}</div>
                         </div>

@@ -24,7 +24,8 @@ function EditBlogPage() {
         console.log(blog);
         axios.post(`${url}/edit-blog-by-id`, { id: blogId, updatedBlog:blog })
         .then((response) => {
-            console.log(response);
+            console.log(response)
+            navigate(`../${username}/${blogId}/View`)
         })
         .catch((error) => {
             console.error(`ERROR: ${error}`);
