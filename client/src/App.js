@@ -11,8 +11,7 @@ import ImagesPage from './pages/Images-Page/ImagesPage';
 import EditBlogPage from './pages/Edit-Blog-Page/EditBlogPage';
 import ViewBlogPage from './pages/View-Blog-Page/ViewBlogPage';
 import Footer from './Footer';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import MainPage from './pages/Main-Page/MainPage';
 import SearchPage from './pages/Search-Page/SearchPage';
 
