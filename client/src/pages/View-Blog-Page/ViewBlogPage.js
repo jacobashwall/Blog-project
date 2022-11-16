@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import BlogBodyView from './ViewBlogBody';
-const axios=require("axios");
+const axios = require("axios");
 
 function ViewBlogPage() {
     let { username, blogId } = useParams();
     const [blog, setBlog] = useState(null)
-    let navigate=useNavigate();
+    let navigate = useNavigate();
     const url = SERVER_URL;
     useEffect(() => {
         getBlogById();
@@ -30,7 +30,14 @@ function ViewBlogPage() {
                     <h2>{blog.subheader}</h2>
                     <h3>{blog.author}</h3>
                     <div>{blog.date}</div>
-                    <BlogBodyView blogBody={blog.body}/>
+                    {blog.tags.map((tag, key) => {
+                        return (
+                            <div key={key}>
+                                <div>{tag}</div>
+                            </div>
+                        )
+                    })}
+                    <BlogBodyView blogBody={blog.body} />
                     <button disabled={blog.author != username} onClick={() => navigate(`../${blog.author}/${blog._id}/Edit`)}>Edit</button>
                 </div>)
                 :

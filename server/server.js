@@ -287,6 +287,7 @@ app.post("/edit-blog-by-id", async (req, res) => {
         header: updatedBlog.header,
         subheader: updatedBlog.subheader,
         date: Date.now(),
+        tags: updatedBlog.tags,
         body: updatedBlog.body
       }
     },
@@ -306,6 +307,7 @@ app.post("/new-blog", (req, res) => {
     subheader: "A fresh new blog for you!",
     author: req.body.username,
     date: Date.now(),
+    tags:[req.body.username,],
     body: [{
       title: "Title",
       imageId: "Image ID",
