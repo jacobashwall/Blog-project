@@ -25,7 +25,6 @@ function SearchPage() {
   return (
     <div>
       <h1>{"Search results for " + tag}</h1>
-      <h1>{username}</h1>
       <div className="searchResults">
         {
           searchedBlogs ?
