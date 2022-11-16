@@ -19,7 +19,6 @@ const Toolbar=()=> {
         <div className="gap">
         <input onChange={e => { setSearch(e.target.value); setSearchColor('white') }} value={search} onFocus={e => { if (search === "Search") setSearch("") }} onBlur={e => { if (e.target.value === "") { setSearch("Search"); setSearchColor('grey') } }} style={{ color: searchColor }}></input>
         <button onClick={()=>{navigate(link)}}>Search</button>
-        <h1>{location.pathname}</h1>
         </div>
         <a href="/">Home</a>
         <a href="./Register">Register</a>
