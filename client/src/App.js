@@ -21,7 +21,6 @@ import SearchPage from './pages/Search-Page/SearchPage';
 function App() {
   return (
     <div className="App">
-
       <Router>
       <Toolbar />
         <Routes>
