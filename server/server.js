@@ -246,6 +246,11 @@ app.post("/get-blogs-by-user", async (req, res) => {
   res.json(allData);
 })
 
+app.post("/get-blogs-by-tag", async (req, res) => {
+  const allData = await Blog.find({ tags: req.body.tag });
+  res.json(allData);
+})
+
 app.post("/get-images-by-id", async (req, res) => {
   try {
     const allData = await Image.findOne({ _id: new mongoose.Types.ObjectId(req.body.id) });

@@ -1,1 +1,2 @@
 fix remove section and tag 
+realize how to get teh username to the toolbar and chaneg he search method to use it
