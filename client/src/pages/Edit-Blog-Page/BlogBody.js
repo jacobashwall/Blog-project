@@ -1,10 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 const axios=require("axios")
 
 function BlogBody(props) {
     const [blogBody, setBlogBody] = useState(props.blogBody);
     const url = SERVER_URL;
-
+    
+    //since react setSatte uses queues and doesnt update instantly,we are forced to use useEffect, so the component would render anytime the state changes
+    useEffect(()=>{
+        updateBlogBody()
+    },[blogBody])
+    
     const addSection = () => {
         setBlogBody(current => [...current,
         {
@@ -102,35 +107,35 @@ function BlogBody(props) {
                     return (
                         <div key={key}>
                             <input
-                                onChange={e => { updateSectionTitle(key, e.target.value); updateBlogBody(); }}
+                                onChange={e => { updateSectionTitle(key, e.target.value);}}
                                 value={section.title}
                                 onFocus={e => { if (section.title === "Title") updateSectionTitle(key, "") }}
-                                onBlur={e => { if (e.target.value === "") { updateSectionTitle(key, "Title"); }; updateBlogBody(); }}
+                                onBlur={e => { if (e.target.value === "") { updateSectionTitle(key, "Title"); };}}
                                 style={{ color: "white" }}>
                             </input>
                             <br></br>
                             <input
-                                onChange={e => { updateSectionImageId(key, e.target.value); updateBlogBody(); }}
+                                onChange={e => { updateSectionImageId(key, e.target.value); }}
                                 value={section.imageId}
                                 onFocus={e => { if (section.imageId === "Image ID") updateSectionImageId(key, "") }}
-                                onBlur={e => { if (e.target.value === "") { updateSectionImageId(key, "Image ID"); }; updateBlogBody();  }}
+                                onBlur={e => { if (e.target.value === "") { updateSectionImageId(key, "Image ID"); };}}
                                 style={{ color: "white" }}>
                             </input>
                             <button onClick={()=>isImageExist(key)}>check</button>
                             <br></br>
                             <textarea
-                                onChange={e => { updateSectionDescription(key, e.target.value); updateBlogBody(); }}
+                                onChange={e => { updateSectionDescription(key, e.target.value);}}
                                 value={section.description}
                                 onFocus={e => { if (section.description === "Image Description") updateSectionDescription(key, "") }}
-                                onBlur={e => { if (e.target.value === "") { updateSectionDescription(key, "Image Description"); }; updateBlogBody(); }}
+                                onBlur={e => { if (e.target.value === "") { updateSectionDescription(key, "Image Description"); };}}
                                 style={{ color: "white", background: "transparent" }}>
                             </textarea>
                             <br></br>
                             <textarea
-                                onChange={e => { updateSectionText(key, e.target.value); updateBlogBody(); }}
+                                onChange={e => { updateSectionText(key, e.target.value); }}
                                 value={section.text}
                                 onFocus={e => { if (section.text === "Text") updateSectionText(key, "") }}
-                                onBlur={e => { if (e.target.value === "") { updateSectionText(key, "Text"); }; updateBlogBody();  }}
+                                onBlur={e => { if (e.target.value === "") { updateSectionText(key, "Text"); };}}
                                 style={{ color: "white", background: "transparent" }}>
                             </textarea>
                         </div>
