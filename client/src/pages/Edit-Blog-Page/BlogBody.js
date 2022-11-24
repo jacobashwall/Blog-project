@@ -1,18 +1,36 @@
 import React, { useState, useEffect } from 'react'
-const axios=require("axios")
-import { Button, TextField, TextareaAutosize } from '@mui/material';
+const axios = require("axios")
+import { Button, TextField, FormControl, InputLabel, MenuItem, Select  } from '@mui/material';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import ViewImage from './ViewImage';
 
 function BlogBody(props) {
     const [blogBody, setBlogBody] = useState(props.blogBody);
+    const [images, setImages] = useState([])
     const url = SERVER_URL;
-    
+
     //since react setState uses queues and doesnt update instantly,we are forced to use useEffect, so the component would render anytime the state changes
-    useEffect(()=>{
+    useEffect(() => {
         updateBlogBody()
-    },[blogBody])
-    
+    }, [blogBody])
+
+    useEffect(() => {
+        getImages();
+      }, [])
+
+    const getImages = () => {
+        console.log(props.author)
+        axios.post(`${url}/get-images-by-user`, { username: props.author })
+            .then((response) => {
+                setImages(response.data);
+                console.log(images)
+            })
+            .catch((error) => {
+                console.error(`ERROR: ${error}`);
+            });
+    }
+
     const addSection = () => {
         setBlogBody(current => [...current,
         {
@@ -108,52 +126,79 @@ function BlogBody(props) {
                 blogBody.map((section, key) => {
                     return (
                         <div key={key}>
-                            <Button color="secondary" variant="contained" startIcon={<DeleteForeverIcon/>} onClick={()=>{removeSection(key)}} disabled={blogBody.length == 1}></Button>
+                            <Button color="secondary" variant="contained" startIcon={<DeleteForeverIcon />} onClick={() => { removeSection(key) }} disabled={blogBody.length == 1}></Button>
                             <br></br>
-                            <TextField variant="standard"   margin="normal" fullWidth
-                                onChange={e => { updateSectionTitle(key, e.target.value);}}
+                            <TextField variant="standard" margin="normal" fullWidth label="Title"
+                                onChange={e => { updateSectionTitle(key, e.target.value); }}
                                 value={section.title}
                                 onFocus={e => { if (section.title === "Title") updateSectionTitle(key, "") }}
-                                onBlur={e => { if (e.target.value === "") { updateSectionTitle(key, "Title"); };}}
-                                >
-                            </TextField> 
-                            <br></br>
-                            <input
-                                onChange={e => { updateSectionImageId(key, e.target.value); }}
-                                value={section.imageId}
-                                onFocus={e => { if (section.imageId === "Image ID") updateSectionImageId(key, "") }}
-                                onBlur={e => { if (e.target.value === "") { updateSectionImageId(key, "Image ID"); };}}
-                                style={{ color: "white" }}>
-                            </input>
-                            <button onClick={()=>isImageExist(key)}>check</button>
-                            <br></br> 
-                            <TextField multiline maxRows={Infinity} variant="filled" size="small"  margin="normal"
-                                onChange={e => { updateSectionDescription(key, e.target.value);}}
-                                value={section.description}
-                                onFocus={e => { if (section.description === "Image Description") updateSectionDescription(key, "") }}
-                                onBlur={e => { if (e.target.value === "") { updateSectionDescription(key, "Image Description"); };}}
-                                minRows={3}
-
-                                >
+                                onBlur={e => { if (e.target.value === "") { updateSectionTitle(key, "Title"); }; }}
+                            >
                             </TextField>
                             <br></br>
-                            <TextField multiline maxRows={Infinity}  variant="outlined"  margin="normal" fullWidth 
+                            <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+                                <InputLabel id="demo-simple-select-filled-label">Image</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-filled-label"
+                                    id="demo-simple-select-filled"
+                                    value={section.imageId}
+                                    onChange={e=>{updateSectionImageId(key, e.target.value)}}
+                                >
+                                    <MenuItem value="None">
+                                        <em>None</em>
+                                       </MenuItem>
+                                    {
+                                        images?
+                                        images.map((image,key)=>{
+                                            return(
+                                                <MenuItem key={key+1} value={image._id}>{image.name}</MenuItem>
+                                            )
+                                        })
+                                        :
+                                        <MenuItem value="None">
+                                        <em>No image is available!</em>
+                                       </MenuItem>
+                                    }
+                                </Select>
+                            </FormControl>
+                            <br></br>
+                            <ViewImage imageId={section.imageId} sectionKey={key} /> 
+                            <br></br>
+                            <TextField multiline maxRows={Infinity} variant="filled" size="small" label="Image Description"
+                                onChange={e => { updateSectionDescription(key, e.target.value); }}
+                                value={section.description}
+                                onFocus={e => { if (section.description === "Image Description") updateSectionDescription(key, "") }}
+                                onBlur={e => { if (e.target.value === "") { updateSectionDescription(key, "Image Description"); }; }}
+                                minRows={3}
+
+                            >
+                            </TextField>
+                            <br></br>
+                            <TextField multiline maxRows={Infinity} variant="outlined" margin="normal" fullWidth label="Text"
                                 onChange={e => { updateSectionText(key, e.target.value); }}
                                 value={section.text}
                                 onFocus={e => { if (section.text === "Text") updateSectionText(key, "") }}
-                                onBlur={e => { if (e.target.value === "") { updateSectionText(key, "Text"); };}}
+                                onBlur={e => { if (e.target.value === "") { updateSectionText(key, "Text"); }; }}
                                 minRows={10}
-                             >
+                            >
                             </TextField>
-                
+
                         </div>
                     )
                 })
             }
-            <Button variant="contained" endIcon={<AddBoxIcon/>} onClick={addSection}>New Section</Button>
+            <Button variant="contained" endIcon={<AddBoxIcon />} onClick={addSection}>New Section</Button>
             <br></br>
         </div>
     )
 }
 
 export default BlogBody
+
+/* <input
+                                onChange={e => { updateSectionImageId(key, e.target.value); }}
+                                value={section.imageId}
+                                onFocus={e => { if (section.imageId === "Image ID") updateSectionImageId(key, "") }}
+                                onBlur={e => { if (e.target.value === "") { updateSectionImageId(key, "Image ID"); };}}
+                                style={{ color: "white" }}>
+                            </input>*/

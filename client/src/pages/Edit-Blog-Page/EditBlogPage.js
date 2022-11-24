@@ -51,7 +51,7 @@ function EditBlogPage() {
                                 style={{ color: "white" }}>
                             </input>
                         <Tags tags={blog.tags} updateBlog={setBlog}/>
-                        <BlogBody blogBody={blog.body} updateBlog={setBlog} />
+                        <BlogBody blogBody={blog.body} updateBlog={setBlog} author={blog.author}/>
                         <Button startIcon={<ImageTwoToneIcon/>} variant="contained" onClick={() => { navigate(`../${username}/Images`); }}>Images</Button>
                         <Button startIcon={<SaveIcon/>} variant="contained" onClick={updateBlog}>Save</Button>
                     </div>)
