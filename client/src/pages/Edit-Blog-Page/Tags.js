@@ -1,12 +1,13 @@
-import React, { useRef, useState, useEffect } from 'react'
-import { Button, TextField, FormControl, InputLabel, MenuItem, Select  } from '@mui/material';
+import React, { useState, useEffect } from 'react'
+import { Fab, TextField } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
+import AddIcon from '@mui/icons-material/Add';
 
 function Tags(props) {
     const [tags, setTags] = useState(props.tags);
-    let inputRef = useRef();
 
     const addTag = () => {
-        setTags(current => [...current, "New Tag"]);
+        setTags(current => [...current, ""]);
     };
 
     const updateTagTitle = (givenKey, givenTagTitle) => {
@@ -35,7 +36,7 @@ function Tags(props) {
     };
 
     function updateTags() {
-        props.updateBlog(curr => ({ ...curr, tags: tags.filter((tag) => { return tag != "New Tag" }) }))
+        props.updateBlog(curr => ({ ...curr, tags: tags.filter((tag) => { return tag != "" }) }))
     }
 
     return (
@@ -44,23 +45,17 @@ function Tags(props) {
                 tags.map((tag, key) => {
                     return (
                         <div key={key}>
-                            <input
-                                onChange={e => { updateTagTitle(key, e.target.value) }}
+                            <TextField variant="filled" size="small" label="Tag"
+                                onChange={e => { updateTagTitle(key, e.target.value); }}
                                 value={tag}
-                                ref={inputRef}
-                                onFocus={e => { if (tag === "New Tag") updateTagTitle(key, "") }}
-                                onBlur={e => { if (e.target.value === "") { updateTagTitle(key, "New Tag"); } }}
-                                style={{ color: "white" }}
-                                onLoad={() => inputRef.current.focus()}
                                 disabled={key == 0}>
-                            </input>
-                            <button onClick={() => { removeTag(key); }} disabled={key == 0}>remove tag</button>
+                            </TextField>
+                            <Fab color="secondary" onClick={() => { removeTag(key) }} disabled={key == 0}><ClearIcon /></Fab>
                         </div>
                     )
                 })
             }
-            <button onClick={() => { addTag(); }}>add tag</button>
-            <br></br>
+            <Fab onClick={addTag}><AddIcon /></Fab>
         </div>
     )
 }

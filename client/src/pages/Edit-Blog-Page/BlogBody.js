@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 const axios = require("axios")
-import { Button, TextField, FormControl, InputLabel, MenuItem, Select, Fab } from '@mui/material';
+import { TextField, FormControl, InputLabel, MenuItem, Select, Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import ViewImage from './ViewImage';
@@ -100,24 +100,6 @@ function BlogBody(props) {
 
     function updateBlogBody() {
         props.updateBlog(curr => ({ ...curr, body: blogBody }))
-    }
-
-    const isImageExist = (key) => {
-        console.log("click")
-        axios.post(`${url}/exist-images-by-id`, { id: blogBody[key].imageId })
-            .then((response) => {
-                console.log(response.data)
-                if (response.data) {
-                    console.log("Image Found")
-                }
-                else {
-                    updateSectionImageId(key, "No image match this ID");
-                }
-            })
-            .catch((error) => {
-                console.error(`ERROR: ${error}`);
-                updateSectionImageId("Error");
-            });
     }
 
     return (
