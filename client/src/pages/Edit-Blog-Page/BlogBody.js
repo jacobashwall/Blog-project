@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 const axios = require("axios")
-import { Button, TextField, FormControl, InputLabel, MenuItem, Select  } from '@mui/material';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { Button, TextField, FormControl, InputLabel, MenuItem, Select, Fab } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import ClearIcon from '@mui/icons-material/Clear';
 import ViewImage from './ViewImage';
 
 function BlogBody(props) {
@@ -17,7 +17,7 @@ function BlogBody(props) {
 
     useEffect(() => {
         getImages();
-      }, [])
+    }, [])
 
     const getImages = () => {
         console.log(props.author)
@@ -34,10 +34,10 @@ function BlogBody(props) {
     const addSection = () => {
         setBlogBody(current => [...current,
         {
-            title: "Title",
-            imageId: "Image ID",
-            description: "Image Description",
-            text: "Text"
+            title: "",
+            imageId: "",
+            description: "",
+            text: ""
         }]);
     };
 
@@ -126,14 +126,11 @@ function BlogBody(props) {
                 blogBody.map((section, key) => {
                     return (
                         <div key={key}>
-                            <Button color="secondary" variant="contained" startIcon={<DeleteForeverIcon />} onClick={() => { removeSection(key) }} disabled={blogBody.length == 1}></Button>
+                            <Fab color="secondary" onClick={() => { removeSection(key) }} disabled={blogBody.length == 1}><ClearIcon /></Fab>
                             <br></br>
                             <TextField variant="standard" margin="normal" fullWidth label="Title"
                                 onChange={e => { updateSectionTitle(key, e.target.value); }}
-                                value={section.title}
-                                onFocus={e => { if (section.title === "Title") updateSectionTitle(key, "") }}
-                                onBlur={e => { if (e.target.value === "") { updateSectionTitle(key, "Title"); }; }}
-                            >
+                                value={section.title}>
                             </TextField>
                             <br></br>
                             <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
@@ -142,63 +139,46 @@ function BlogBody(props) {
                                     labelId="demo-simple-select-filled-label"
                                     id="demo-simple-select-filled"
                                     value={section.imageId}
-                                    onChange={e=>{updateSectionImageId(key, e.target.value)}}
-                                >
-                                    <MenuItem value="None">
+                                    onChange={e => { updateSectionImageId(key, e.target.value) }}>
+                                    <MenuItem value="">
                                         <em>None</em>
-                                       </MenuItem>
+                                    </MenuItem>
                                     {
-                                        images?
-                                        images.map((image,key)=>{
-                                            return(
-                                                <MenuItem key={key+1} value={image._id}>{image.name}</MenuItem>
-                                            )
-                                        })
-                                        :
-                                        <MenuItem value="None">
-                                        <em>No image is available!</em>
-                                       </MenuItem>
+                                        images ?
+                                            images.map((image, key) => {
+                                                return (
+                                                    <MenuItem key={key + 1} value={image._id}>{image.name}</MenuItem>
+                                                )
+                                            })
+                                            :
+                                            <MenuItem value="">
+                                                <em>No image is available!</em>
+                                            </MenuItem>
                                     }
                                 </Select>
                             </FormControl>
                             <br></br>
-                            <ViewImage imageId={section.imageId} sectionKey={key} /> 
+                            <ViewImage imageId={section.imageId} sectionKey={key} />
                             <br></br>
                             <TextField multiline maxRows={Infinity} variant="filled" size="small" label="Image Description"
                                 onChange={e => { updateSectionDescription(key, e.target.value); }}
                                 value={section.description}
-                                onFocus={e => { if (section.description === "Image Description") updateSectionDescription(key, "") }}
-                                onBlur={e => { if (e.target.value === "") { updateSectionDescription(key, "Image Description"); }; }}
-                                minRows={3}
-
-                            >
+                                minRows={3}>
                             </TextField>
                             <br></br>
                             <TextField multiline maxRows={Infinity} variant="outlined" margin="normal" fullWidth label="Text"
                                 onChange={e => { updateSectionText(key, e.target.value); }}
                                 value={section.text}
-                                onFocus={e => { if (section.text === "Text") updateSectionText(key, "") }}
-                                onBlur={e => { if (e.target.value === "") { updateSectionText(key, "Text"); }; }}
-                                minRows={10}
-                            >
+                                minRows={10}>
                             </TextField>
-
                         </div>
                     )
                 })
             }
-            <Button variant="contained" endIcon={<AddBoxIcon />} onClick={addSection}>New Section</Button>
+            <Fab onClick={addSection}><AddIcon /></Fab>
             <br></br>
         </div>
     )
 }
 
 export default BlogBody
-
-/* <input
-                                onChange={e => { updateSectionImageId(key, e.target.value); }}
-                                value={section.imageId}
-                                onFocus={e => { if (section.imageId === "Image ID") updateSectionImageId(key, "") }}
-                                onBlur={e => { if (e.target.value === "") { updateSectionImageId(key, "Image ID"); };}}
-                                style={{ color: "white" }}>
-                            </input>*/
