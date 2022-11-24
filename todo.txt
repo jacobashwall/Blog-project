@@ -1,1 +1,2 @@
-fix remove section and tag 
+add image menue
+maybe an entire databse just for comments

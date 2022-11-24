@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
 const axios=require("axios")
+import { Button, TextField, TextareaAutosize } from '@mui/material';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 function BlogBody(props) {
     const [blogBody, setBlogBody] = useState(props.blogBody);
     const url = SERVER_URL;
     
-    //since react setSatte uses queues and doesnt update instantly,we are forced to use useEffect, so the component would render anytime the state changes
+    //since react setState uses queues and doesnt update instantly,we are forced to use useEffect, so the component would render anytime the state changes
     useEffect(()=>{
         updateBlogBody()
     },[blogBody])
@@ -69,8 +72,7 @@ function BlogBody(props) {
     };
 
 
-    const removeSection = () => {
-        let givenKey = blogBody.length - 1;
+    const removeSection = (givenKey) => {
         setBlogBody(current =>
             current.filter((obj, key) => {
                 return key !== givenKey;
@@ -106,13 +108,15 @@ function BlogBody(props) {
                 blogBody.map((section, key) => {
                     return (
                         <div key={key}>
-                            <input
+                            <Button color="secondary" variant="contained" startIcon={<DeleteForeverIcon/>} onClick={()=>{removeSection(key)}} disabled={blogBody.length == 1}></Button>
+                            <br></br>
+                            <TextField variant="standard"   margin="normal" fullWidth
                                 onChange={e => { updateSectionTitle(key, e.target.value);}}
                                 value={section.title}
                                 onFocus={e => { if (section.title === "Title") updateSectionTitle(key, "") }}
                                 onBlur={e => { if (e.target.value === "") { updateSectionTitle(key, "Title"); };}}
-                                style={{ color: "white" }}>
-                            </input>
+                                >
+                            </TextField> 
                             <br></br>
                             <input
                                 onChange={e => { updateSectionImageId(key, e.target.value); }}
@@ -122,28 +126,31 @@ function BlogBody(props) {
                                 style={{ color: "white" }}>
                             </input>
                             <button onClick={()=>isImageExist(key)}>check</button>
-                            <br></br>
-                            <textarea
+                            <br></br> 
+                            <TextField multiline maxRows={Infinity} variant="filled" size="small"  margin="normal"
                                 onChange={e => { updateSectionDescription(key, e.target.value);}}
                                 value={section.description}
                                 onFocus={e => { if (section.description === "Image Description") updateSectionDescription(key, "") }}
                                 onBlur={e => { if (e.target.value === "") { updateSectionDescription(key, "Image Description"); };}}
-                                style={{ color: "white", background: "transparent" }}>
-                            </textarea>
+                                minRows={3}
+
+                                >
+                            </TextField>
                             <br></br>
-                            <textarea
+                            <TextField multiline maxRows={Infinity}  variant="outlined"  margin="normal" fullWidth 
                                 onChange={e => { updateSectionText(key, e.target.value); }}
                                 value={section.text}
                                 onFocus={e => { if (section.text === "Text") updateSectionText(key, "") }}
                                 onBlur={e => { if (e.target.value === "") { updateSectionText(key, "Text"); };}}
-                                style={{ color: "white", background: "transparent" }}>
-                            </textarea>
+                                minRows={10}
+                             >
+                            </TextField>
+                
                         </div>
                     )
                 })
             }
-            <button onClick={removeSection} disabled={blogBody.length == 1}>remove section</button>
-            <button onClick={addSection}>add section</button>
+            <Button variant="contained" endIcon={<AddBoxIcon/>} onClick={addSection}>New Section</Button>
             <br></br>
         </div>
     )

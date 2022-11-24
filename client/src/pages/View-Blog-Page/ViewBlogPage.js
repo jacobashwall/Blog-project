@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import Comments from './Comments';
 import BlogBodyView from './ViewBlogBody';
 const axios = require("axios");
 
@@ -39,6 +40,7 @@ function ViewBlogPage() {
                     })}
                     <BlogBodyView blogBody={blog.body} />
                     <button disabled={blog.author != username} onClick={() => navigate(`../${blog.author}/${blog._id}/Edit`)}>Edit</button>
+                    <Comments comments={blog.comments} username={username} updateBlog={setBlog} />
                 </div>)
                 :
                 (<p>Loading Blog...</p>)

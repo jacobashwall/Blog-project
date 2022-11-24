@@ -21,15 +21,14 @@ function Tags(props) {
     };
 
     //since react setSatte uses queues and doesnt update instantly,we are forced to use useEffect, so the component would render anytime the state changes
-    useEffect(()=>{
+    useEffect(() => {
         updateTags()
-    },[tags])
+    }, [tags])
 
-    const removeTag = () => {
-        let givenKey = tags.length - 1;
+    const removeTag = (tagKey) => {
         setTags(current =>
             current.filter((obj, key) => {
-                return key !== givenKey;
+                return key !== tagKey;
             }),
         );
     };
@@ -45,19 +44,20 @@ function Tags(props) {
                     return (
                         <div key={key}>
                             <input
-                                onChange={e => { updateTagTitle(key, e.target.value)}}
+                                onChange={e => { updateTagTitle(key, e.target.value) }}
                                 value={tag}
                                 ref={inputRef}
                                 onFocus={e => { if (tag === "New Tag") updateTagTitle(key, "") }}
-                                onBlur={e => { if (e.target.value === "") { updateTagTitle(key, "New Tag"); }}}
+                                onBlur={e => { if (e.target.value === "") { updateTagTitle(key, "New Tag"); } }}
                                 style={{ color: "white" }}
-                                onLoad={() => inputRef.current.focus()}>
+                                onLoad={() => inputRef.current.focus()}
+                                disabled={key == 0}>
                             </input>
+                            <button onClick={() => { removeTag(key); }} disabled={key == 0}>remove tag</button>
                         </div>
                     )
                 })
             }
-            <button onClick={() => { removeTag(); }} disabled={tags.length == 1}>remove tag</button>
             <button onClick={() => { addTag(); }}>add tag</button>
             <br></br>
         </div>

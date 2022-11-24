@@ -3,6 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom'
 import BlogBody from './BlogBody';
 import Tags from './Tags';
 const axios=require("axios")
+import Button from '@mui/material/Button';
+import SaveIcon from '@mui/icons-material/Save';
+import ImageTwoToneIcon from '@mui/icons-material/ImageTwoTone';
 
 function EditBlogPage() {
     let { username, blogId } = useParams();
@@ -49,8 +52,8 @@ function EditBlogPage() {
                             </input>
                         <Tags tags={blog.tags} updateBlog={setBlog}/>
                         <BlogBody blogBody={blog.body} updateBlog={setBlog} />
-                        <button onClick={() => { navigate(`../${username}/Images`); }}>my images</button>
-                        <button onClick={updateBlog}>update</button>
+                        <Button startIcon={<ImageTwoToneIcon/>} variant="contained" onClick={() => { navigate(`../${username}/Images`); }}>Images</Button>
+                        <Button startIcon={<SaveIcon/>} variant="contained" onClick={updateBlog}>Save</Button>
                     </div>)
                     :
                     (<p>Loading Blog...</p>)
