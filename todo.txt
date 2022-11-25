@@ -1,3 +1,2 @@
 maybe an entire databse just for comments
 optimize api to get only whats needed
-fix the header and subheader

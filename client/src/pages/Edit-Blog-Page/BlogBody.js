@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 const axios = require("axios")
-import { TextField, FormControl, InputLabel, MenuItem, Select, Fab } from '@mui/material';
+import { TextField, FormControl, InputLabel, MenuItem, Select, Fab, Card, CardContent, CardHeader } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import ViewImage from './ViewImage';
@@ -107,14 +107,14 @@ function BlogBody(props) {
             {
                 blogBody.map((section, key) => {
                     return (
-                        <div key={key}>
-                            <Fab color="secondary" onClick={() => { removeSection(key) }} disabled={blogBody.length == 1}><ClearIcon /></Fab>
-                            <br></br>
-                            <TextField variant="standard" margin="normal" fullWidth label="Title"
+                        <Card key={key}>
+                            <CardHeader
+                            action={<Fab color="secondary" onClick={() => { removeSection(key) }} disabled={blogBody.length == 1} size="small"><ClearIcon /></Fab>}
+                            title={ <TextField variant="standard" margin="normal" fullWidth label="Title"
                                 onChange={e => { updateSectionTitle(key, e.target.value); }}
                                 value={section.title}>
-                            </TextField>
-                            <br></br>
+                            </TextField>}/>
+                           <CardContent>
                             <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
                                 <InputLabel id="demo-simple-select-filled-label">Image</InputLabel>
                                 <Select
@@ -153,7 +153,8 @@ function BlogBody(props) {
                                 value={section.text}
                                 minRows={10}>
                             </TextField>
-                        </div>
+                            </CardContent>
+                        </Card>
                     )
                 })
             }

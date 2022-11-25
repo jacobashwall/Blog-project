@@ -1,3 +1,4 @@
+import { CardMedia } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 const axios = require("axios")
 
@@ -29,7 +30,7 @@ function ViewImage(props) {
       }, [props])
 
   return (
-    <img className={'image-tag'+props.sectionKey} src={null} width='10%' />
+    <CardMedia component="img" className={'image-tag'+props.sectionKey} src={null} height="500" width="500" />
   )
 }
 

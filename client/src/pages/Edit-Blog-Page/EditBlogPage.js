@@ -37,12 +37,14 @@ function EditBlogPage() {
                 console.error(`ERROR: ${error}`);
             });
     }
+
+    //dont use setBlog({ header: givenHeader }) since you wont set the blog with it curen tvalue. makes other fields to be undefined for some time and mess with mui controlled text fields
     const updateHeader = (givenHeader) => {
-        setBlog({ header: givenHeader })
+        setBlog(curr => ({ ...curr, header: givenHeader }))
     }
 
     const updateSubheader = (givenSubheader) => {
-        setBlog({ subheader: givenSubheader })
+        setBlog(curr => ({ ...curr, subheader: givenSubheader }))
     }
 
     return (
