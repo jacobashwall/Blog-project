@@ -11,6 +11,8 @@ const LoginBox = () => {
   const [passwordColor, setPasswordColor] = useState("grey");
   let navigate = useNavigate();
   function login() {
+    navigate("./Jacob/6374bb23e8fcbeb9dfa7736c/Edit")
+    /*
     axios.post(`${url}/login-check`,
       {
         username: username,
@@ -20,6 +22,7 @@ const LoginBox = () => {
         let pass = response.data;
         console.log(pass);
         if (pass == true) {
+    
           navigate(`./${username}/Main`);
         }
         else {
@@ -38,6 +41,7 @@ const LoginBox = () => {
       .catch((error) => {
         console.log(error);
       });
+      */
   }
   return (
     <div className="LoginBox">

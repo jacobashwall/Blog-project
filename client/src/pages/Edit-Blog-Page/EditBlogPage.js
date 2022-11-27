@@ -5,7 +5,8 @@ import Tags from './Tags';
 const axios = require("axios")
 import SaveIcon from '@mui/icons-material/Save';
 import ImageTwoToneIcon from '@mui/icons-material/ImageTwoTone';
-import { Button, FormControl, TextField } from '@mui/material';
+import { Button, CircularProgress, FormControl, Grid, TextField, Skeleton, AppBar, Paper } from '@mui/material';
+import { Container } from '@mui/system';
 
 function EditBlogPage() {
     let { username, blogId } = useParams();
@@ -48,30 +49,45 @@ function EditBlogPage() {
     }
 
     return (
-        <div >
+        <Grid container spacing={2} direction='row' justifyContent="center" >
+            <Grid item xs={3} sm={3} md={3} lg={3} xl={3} >
+                <Paper elevation={12} sx={{height: "75vh"}}></Paper>
+            </Grid>
             {
                 blog ?
-                    (
-                        <div>
-                            <TextField variant="standard" label="Header" margin='dense'
-                                onChange={e => { updateHeader(e.target.value); }}
-                                value={blog.header || ""}>
-                            </TextField>
-                            <br></br>
-                            <TextField variant="outlined" label="Subheader" fullWidth margin='dense'
-                                onChange={e => { updateSubheader(e.target.value); }}
-                                value={blog.subheader || ""}>
-                            </TextField>
-                            <Tags tags={blog.tags} updateBlog={setBlog} />
-                            <BlogBody blogBody={blog.body} updateBlog={setBlog} author={blog.author} />
-                            <Button startIcon={<ImageTwoToneIcon />} variant="contained" onClick={() => { navigate(`../${username}/Images`); }}>Images</Button>
-                            <Button startIcon={<SaveIcon />} variant="contained" onClick={updateBlog}>Save</Button>
-                        </div>)
+
+                    <Grid sx={{ overflow: 'auto', maxHeight: "75vh", display: 'block' }} container item spacing={1} direction="column" xs={6} sm={6} md={6} lg={6} xl={6}>
+                        <TextField variant="standard" label="Header" margin='dense'
+                            onChange={e => { updateHeader(e.target.value); }}
+                            value={blog.header}>
+                        </TextField>
+                        <br></br>
+                        <TextField variant="outlined" label="Subheader" fullWidth margin='dense'
+                            onChange={e => { updateSubheader(e.target.value); }}
+                            value={blog.subheader}>
+                        </TextField>
+                        <Tags tags={blog.tags} updateBlog={setBlog} />
+                        <BlogBody blogBody={blog.body} updateBlog={setBlog} author={blog.author} />
+                    </Grid>
                     :
-                    (<p>Loading Blog...</p>)
+                    <Grid container item spacing={1} direction="column" xs={6} sm={6} md={6} lg={6} xl={6}>
+                        <Skeleton variant="rectangular" fullWidth height={48} />
+                        <br></br>
+                        <Skeleton variant="rectangular" fullWidth height={56} />
+                        <br></br>
+                        <Skeleton variant="rectangular" fullWidth height={600} />
+                    </Grid>
 
             }
-        </div>
+            <Grid container item direction="column" xs={3} sm={3} md={3} lg={3} xl={3} >
+                <Grid item >
+                    <Button startIcon={<ImageTwoToneIcon />} variant="contained" onClick={() => { navigate(`../${username}/Images`); }}>Images</Button>
+                </Grid>
+                <Grid item >
+                    <Button startIcon={<SaveIcon />} variant="contained" onClick={updateBlog}>Save</Button>
+                </Grid>
+            </Grid>
+        </Grid>
     )
 }
 

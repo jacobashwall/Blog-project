@@ -30,7 +30,7 @@ function ViewImage(props) {
       }, [props])
 
   return (
-    <CardMedia component="img" className={'image-tag'+props.sectionKey} src={null} height="500" width="500" />
+    <CardMedia sx = {{padding: "1em 1em 0 1em" , objectFit: "contain" }} component="img" className={'image-tag'+props.sectionKey} src={null} height="500" width="500" />
   )
 }
 
