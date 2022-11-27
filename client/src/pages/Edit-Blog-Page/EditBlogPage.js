@@ -49,14 +49,14 @@ function EditBlogPage() {
     }
 
     return (
-        <Grid container spacing={2} direction='row' justifyContent="center" >
+        <Grid container columnSpacing={4} direction='row' justifyContent="center" alignItems="stretch"   sx={{paddingTop: "0"}}>
             <Grid item xs={3} sm={3} md={3} lg={3} xl={3} >
-                <Paper elevation={12} sx={{height: "75vh"}}></Paper>
+                <Paper elevation={20} sx={{ height: "100%" }}></Paper>
             </Grid>
             {
                 blog ?
 
-                    <Grid sx={{ overflow: 'auto', maxHeight: "75vh", display: 'block' }} container item spacing={1} direction="column" xs={6} sm={6} md={6} lg={6} xl={6}>
+                    <Grid sx={{ overflow: 'auto', maxHeight: "80vh", display: 'block' }} container item spacing={1} direction="column" xs={6} sm={6} md={6} lg={6} xl={6}>
                         <TextField variant="standard" label="Header" margin='dense'
                             onChange={e => { updateHeader(e.target.value); }}
                             value={blog.header}>
@@ -79,13 +79,12 @@ function EditBlogPage() {
                     </Grid>
 
             }
-            <Grid container item direction="column" xs={3} sm={3} md={3} lg={3} xl={3} >
-                <Grid item >
+
+            <Grid item xs={3} sm={3} md={3} lg={3} xl={3}  >
+                <Paper elevation={12} sx={{ height: "100%" }}>
                     <Button startIcon={<ImageTwoToneIcon />} variant="contained" onClick={() => { navigate(`../${username}/Images`); }}>Images</Button>
-                </Grid>
-                <Grid item >
                     <Button startIcon={<SaveIcon />} variant="contained" onClick={updateBlog}>Save</Button>
-                </Grid>
+                </Paper>
             </Grid>
         </Grid>
     )
