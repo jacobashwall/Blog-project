@@ -228,7 +228,8 @@ app.post('/upload', upload.single("image"), (req, res) => {
     desc: req.body.description,
     uploader: req.body.uploader
   });
-  saveImage.save().then((res) => console.log('image is saved')).catch((err) => console.log(err));
+  saveImage.save().then((r) =>  res.send("image is saved")).catch((err) => console.log(err));
+
 })
 
 app.get('/get-all-images', async (req, res) => {

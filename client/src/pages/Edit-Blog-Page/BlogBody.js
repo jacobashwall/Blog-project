@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 const axios = require("axios")
 import { TextField, FormControl, InputLabel, MenuItem, Select, Fab, Card, CardContent, CardHeader } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import ViewImage from './ViewImage';
+import {motion} from 'framer-motion'
 
 function BlogBody(props) {
     const [blogBody, setBlogBody] = useState(props.blogBody);
     const [images, setImages] = useState([])
+
     const url = SERVER_URL;
+    const father =useRef()
 
     //since react setState uses queues and doesnt update instantly,we are forced to use useEffect, so the component would render anytime the state changes
     useEffect(() => {
@@ -17,7 +20,7 @@ function BlogBody(props) {
 
     useEffect(() => {
         getImages();
-    }, [])
+    }, [props.upload])
 
     const getImages = () => {
         console.log(props.author)
@@ -103,11 +106,11 @@ function BlogBody(props) {
     }
 
     return (
-        <div>
+        <div ref={father}>
             {
                 blogBody.map((section, key) => {
                     return (
-                        <Card key={key}>
+                        <Card key={key} component={motion.div} drag={props.drag} dragConstraints={father}>
                             <CardHeader
                             action={<Fab color="secondary" onClick={() => { removeSection(key) }} disabled={blogBody.length == 1} size="small"><ClearIcon /></Fab>}
                             title={ <TextField variant="standard" margin="normal" fullWidth label="Title"

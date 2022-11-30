@@ -5,13 +5,23 @@ import Tags from './Tags';
 const axios = require("axios")
 import SaveIcon from '@mui/icons-material/Save';
 import ImageTwoToneIcon from '@mui/icons-material/ImageTwoTone';
-import { Button, CircularProgress, FormControl, Grid, TextField, Skeleton, AppBar, Paper } from '@mui/material';
+import { Button, CircularProgress, FormControl, Grid, TextField, Skeleton, AppBar, Paper, Tooltip, Fab } from '@mui/material';
 import { Container } from '@mui/system';
+import ToolsAccordion from './ToolsAccordion';
+import PanToolIcon from '@mui/icons-material/PanTool';
+import { motion, useDragControls } from "framer-motion"
+import DoNotTouchIcon from '@mui/icons-material/DoNotTouch';
+import UploadImageWidget from './UploadImageWidget';
 
 function EditBlogPage() {
     let { username, blogId } = useParams();
     let navigate = useNavigate();
     const [blog, setBlog] = useState();
+    const [drag, setDrag] = useState(false)
+    const [workspace, setWorkspace] = useState([]);
+    const[upload,setUploaded]=useState(true)
+
+
     const url = SERVER_URL;
     useEffect(() => {
         getBlogById();
@@ -49,9 +59,11 @@ function EditBlogPage() {
     }
 
     return (
-        <Grid container columnSpacing={4} direction='row' justifyContent="center" alignItems="stretch"   sx={{paddingTop: "0"}}>
+        <Grid container columnSpacing={4} direction='row' justifyContent="center" alignItems="stretch" sx={{ paddingTop: "0" }}>
             <Grid item xs={3} sm={3} md={3} lg={3} xl={3} >
-                <Paper elevation={20} sx={{ height: "100%" }}></Paper>
+                <Paper elevation={20} sx={{ height: "100%" }}>
+                    <ToolsAccordion updateBlog={updateBlog} username={username} drag={drag} updateWorkspace={setWorkspace} />
+                </Paper>
             </Grid>
             {
                 blog ?
@@ -67,23 +79,33 @@ function EditBlogPage() {
                             value={blog.subheader}>
                         </TextField>
                         <Tags tags={blog.tags} updateBlog={setBlog} />
-                        <BlogBody blogBody={blog.body} updateBlog={setBlog} author={blog.author} />
+                        <BlogBody blogBody={blog.body} updateBlog={setBlog} author={blog.author} drag={drag} upload={upload} />
                     </Grid>
                     :
                     <Grid container item spacing={1} direction="column" xs={6} sm={6} md={6} lg={6} xl={6}>
-                        <Skeleton variant="rectangular" fullWidth height={48} />
+                        <Skeleton variant="rectangular"  height={48} />
                         <br></br>
-                        <Skeleton variant="rectangular" fullWidth height={56} />
+                        <Skeleton variant="rectangular"  height={56} />
                         <br></br>
-                        <Skeleton variant="rectangular" fullWidth height={600} />
+                        <Skeleton variant="rectangular"  height={600} />
                     </Grid>
 
             }
 
             <Grid item xs={3} sm={3} md={3} lg={3} xl={3}  >
                 <Paper elevation={12} sx={{ height: "100%" }}>
-                    <Button startIcon={<ImageTwoToneIcon />} variant="contained" onClick={() => { navigate(`../${username}/Images`); }}>Images</Button>
-                    <Button startIcon={<SaveIcon />} variant="contained" onClick={updateBlog}>Save</Button>
+                    <Tooltip title="Drag">
+                        <Fab onClick={() => setDrag(!drag)}>
+                            {drag ?
+                                <DoNotTouchIcon /> :
+                                <PanToolIcon />
+                            }
+                        </Fab>
+                    </Tooltip>
+                    {workspace.map((widget,key) => {
+                        if (widget.name == "Upload Image")
+                            return (<UploadImageWidget drag={drag} username={username} key={key} updateUpload={setUploaded} upload={upload}/>)
+                    })}
                 </Paper>
             </Grid>
         </Grid>
