@@ -46,11 +46,26 @@ function UploadImageWidget(props) {
     axios.post(`${url}/upload`, formData).then((response) => { props.updateUpload(!props.upload); setIsUploading(false); handleClose(); });
   };
 
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.5
+      }
+    }
+  }
 
   return (
     <div>
-      <Tooltip title="Uplaod Image" component={motion.div} drag={props.drag} >
-        <Fab onClick={() => { if (!props.drag) { handleClickOpen() } }}>
+      <Tooltip variants={container}
+        initial="hidden"
+        animate="show" title={props.drag ? "" : "Uplaod Image"} component={motion.div} drag={props.drag} dragConstraints={props.window}>
+        <Fab onClick={() => {
+          if (props.add) {
+            props.updateWorkspace(current => [...current, { name: "Upload Image" }])
+          } if (!props.drag && !props.add) { handleClickOpen() }
+        }}>
           <AddPhotoAlternateTwoToneIcon />
         </Fab>
       </Tooltip>
