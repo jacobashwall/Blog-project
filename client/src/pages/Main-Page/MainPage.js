@@ -1,9 +1,10 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { UsernameContext } from '../../UsernameConetxt';
 
 function MainPage() {
-    let { username } = useParams();
+    const { username, setUsername } = useContext(UsernameContext)
     const url = SERVER_URL;
     let navigate=useNavigate();
     const [myBlogs, setMyBlogs] = useState([])

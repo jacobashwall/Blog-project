@@ -34,7 +34,7 @@ export default function Appbar() {
     setAnchorEl(null);
   };
 
-  const handleDialogClose=() => { setLoginOpen(false);console.log(typeof(loginOpen)) }
+  const handleDialogClose = () => { setLoginOpen(false); console.log(typeof (loginOpen)) }
 
   const menuId = 'primary-search-account-menu';
 
@@ -42,102 +42,101 @@ export default function Appbar() {
 
   return (
     <div>
-     
-    <Box sx={{ flexGrow: 1 }}>
-      
-      <AppBar position="fixed">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            MUI
-          </Typography>
-          <div>
-            <TextField variant="outlined" placeholder='Search' onChange={e => { setSearch(e.target.value); }} value={search} style={{ background: "white" }} size="small"></TextField>
-            <Button variant='contained' onClick={() => { navigate(link) }}>Search</Button>
-          </div>
 
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: 'flex' }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
+      <Box sx={{ flexGrow: 1 }}>
+
+        <AppBar position="fixed">
+          <Toolbar>
             <IconButton
               size="large"
-              aria-label="show 17 new notifications"
+              edge="start"
               color="inherit"
+              aria-label="open drawer"
+              sx={{ mr: 2 }}
             >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
+              <MenuIcon />
             </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ display: { xs: 'none', sm: 'block' } }}
             >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      <Toolbar />{/*When you render the app bar position fixed, the dimension of the element doesn't impact the rest of the page. This can cause some part of your content to be invisible, behind the app bar. */}
-      <Menu
-      anchorEl={anchorEl/*the pop over menu */}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={Boolean(anchorEl)}
-      onClose={handleMenuClose}
-    >
-      {
-      username?
-      <MenuItem onClick={handleMenuClose}>{"My account "+username}</MenuItem>
-      :
-      <div>
-      <MenuItem onClick={() => { handleMenuClose(); setLoginOpen(true); }}>Login</MenuItem>
-       <LoginMenuItem  loginOpen={loginOpen} setLoginOpen={setLoginOpen}/>
-      </div>
-    }
-    </Menu>
+              MUI
+            </Typography>
+            <div>
+              <TextField variant="outlined" placeholder='Search' onChange={e => { setSearch(e.target.value); }} value={search} style={{ background: "white" }} size="small"></TextField>
+              <Button variant='contained' onClick={() => { navigate(link) }}>Search</Button>
+            </div>
 
-    </Box>
+            <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ display: 'flex' }}>
+              <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                <Badge badgeContent={4} color="error">
+                  <MailIcon />
+                </Badge>
+              </IconButton>
+              <IconButton
+                size="large"
+                aria-label="show 17 new notifications"
+                color="inherit"
+              >
+                <Badge badgeContent={17} color="error">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            </Box>
+          </Toolbar>
+        </AppBar>
+        <Toolbar />{/*When you render the app bar position fixed, the dimension of the element doesn't impact the rest of the page. This can cause some part of your content to be invisible, behind the app bar. */}
+        <Menu
+          anchorEl={anchorEl/*the pop over menu */}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+
+          id={menuId}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={Boolean(anchorEl)}
+          onClose={handleMenuClose}
+        >
+          {
+            username ?
+              <div>
+                <MenuItem onClick={handleMenuClose}>{"My account " + username}</MenuItem>
+                <MenuItem onClick={()=>{handleMenuClose();setUsername(null);/*if not auto open login box after sign out setLoginOpen(false)*/}}>Sign out</MenuItem>
+              </div>
+              :
+              <div>
+                <MenuItem onClick={() => { handleMenuClose(); setLoginOpen(true); }}>Login</MenuItem>
+                <LoginMenuItem loginOpen={loginOpen} setLoginOpen={setLoginOpen} />
+              </div>
+          }
+        </Menu>
+
+      </Box>
     </div>
   );
 }
 
 
 /*
-import './Toolbar.css';
-import settingsIcon from './Settings-icon.png';
-import React, { useState } from 'react';
-import { useLocation,useNavigate } from 'react-router-dom'
 
 const Toolbar=()=> {
   
