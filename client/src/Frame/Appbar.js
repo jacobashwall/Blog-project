@@ -16,12 +16,11 @@ import { Button, TextField, Dialog, DialogActions, DialogTitle, DialogContent } 
 import { UsernameContext } from '../UsernameConetxt';
 import LoginMenuItem from './LoginMenuItem';
 
+
 export default function Appbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [search, setSearch] = useState("");
   const [loginOpen, setLoginOpen] = useState(false);
-  const [usernameCheck, setUsernameCheck] = useState("")
-  const [passwordCheck, setPasswordCheck] = useState("")
 
   const { username, setUsername } = useContext(UsernameContext)
   const navigate = useNavigate();
@@ -117,24 +116,15 @@ export default function Appbar() {
       open={Boolean(anchorEl)}
       onClose={handleMenuClose}
     >
+      {
+      username?
+      <MenuItem onClick={handleMenuClose}>{"My account "+username}</MenuItem>
+      :
+      <div>
       <MenuItem onClick={() => { handleMenuClose(); setLoginOpen(true); }}>Login</MenuItem>
-      <Dialog open={loginOpen} onClose={handleDialogClose}>
-        <DialogTitle>Login</DialogTitle>
-        <DialogContent>
-          <TextField variant="standard" margin="normal" fullWidth label="Username"
-            onChange={e => { setUsernameCheck(e.target.value); }}
-            value={usernameCheck}>
-          </TextField>
-          <TextField variant="standard" margin="normal" fullWidth label="Password"
-            onChange={e => { setPasswordCheck(e.target.value); }}
-            value={passwordCheck}>
-          </TextField>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDialogClose}>Cancel</Button>
-        </DialogActions>
-      </Dialog>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+       <LoginMenuItem  loginOpen={loginOpen} setLoginOpen={setLoginOpen}/>
+      </div>
+    }
     </Menu>
 
     </Box>
@@ -150,22 +140,10 @@ import React, { useState } from 'react';
 import { useLocation,useNavigate } from 'react-router-dom'
 
 const Toolbar=()=> {
-  const [search,setSearch]=useState("Search");
-  const [searchColor,setSearchColor]=useState("gray");
-  const location = useLocation();
-  const navigate=useNavigate();
-  let username= location.pathname.slice(1,location.pathname.substring(1,location.pathname.length).indexOf('/')+1)
-  if(!username){
-    username="Anonymous"
-  }
-  let link="/"+username+"/Search/"+search
+  
     return(
         <nav className="toolBar">
         <a href="./Settings" ><img src={settingsIcon} className="settings-icon" alt="" /> </a>
-        <div className="gap">
-        <input onChange={e => { setSearch(e.target.value); setSearchColor('white') }} value={search} onFocus={e => { if (search === "Search") setSearch("") }} onBlur={e => { if (e.target.value === "") { setSearch("Search"); setSearchColor('grey') } }} style={{ color: searchColor }}></input>
-        <button onClick={()=>{navigate(link)}}>Search</button>
-        </div>
         <a href="/">Home</a>
         <a href="./Register">Register</a>
         <a href="./About-Us">About-Us</a>
