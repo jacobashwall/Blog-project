@@ -40,11 +40,11 @@ function Tags(props) {
     }
 
     return (
-        <div>
+        <div >
             {
                 tags.map((tag, key) => {
                     return (
-                        <div key={key}>
+                        <div key={key} style={{display:"inline-block"}} >
                             <TextField variant="filled" size="small" label="Tag"
                                 onChange={e => { updateTagTitle(key, e.target.value); }}
                                 value={tag}

@@ -57,10 +57,10 @@ function UploadImageWidget(props) {
   }
 
   return (
-    <div>
+    <div style={{display:"inline-block"}}>
       <Tooltip variants={container}
         initial="hidden"
-        animate="show" title={props.drag ? "" : "Uplaod Image"} component={motion.div} drag={props.drag} dragConstraints={props.window}>
+        animate="show" title={props.drag ? "" : "Uplaod Image"} component={motion.div} drag={props.drag} dragConstraints={props.window} >
         <Fab onClick={() => {
           if (props.add) {
             props.updateWorkspace(current => [...current, { name: "Upload Image" }])

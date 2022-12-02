@@ -5,7 +5,8 @@ import SaveIcon from '@mui/icons-material/Save';
 
 function SaveBlogWidget(props) {
     return (
-        <Tooltip title="Save" component={motion.div} drag={props.drag}>
+        <div style={{display:"inline-block"}}>
+        <Tooltip title="Save" component={motion.div} drag={props.drag} dragConstraints={props.window} >
             <Fab onClick={() => {
                  if (props.add) {
                     props.updateWorkspace(current => [...current, { name: "Save Blog" }])}
@@ -15,6 +16,7 @@ function SaveBlogWidget(props) {
                 <SaveIcon />
             </Fab>
         </Tooltip>
+        </div>
     )
 }
 

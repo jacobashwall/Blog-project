@@ -1,6 +1,6 @@
 .footer{
     align-self: stretch;
-    background-color: #282c34;
+    background-color: rgb(200,200,200);
     color: black;
     display: flex;
     justify-content:  flex-start;

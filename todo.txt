@@ -1,4 +1,13 @@
 maybe an entire databse just for comments
 optimize api to get only whats needed
-maybe use mui tooltip
-remove padding top to grid
+handle moving section
+react hook to refactor making username global
+delete tag by click
+delete widget by click
+delete section by click
+(maybe use the same fab)
+finssh workspace
+use redux after useconetxt
+fix menu on appbar
+
+
