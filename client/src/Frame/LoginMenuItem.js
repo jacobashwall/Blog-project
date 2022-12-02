@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react'
-import { MenuItem, Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText, TextField, Button, CircularProgress, InputAdornment, IconButton, FormControl, InputLabel, OutlinedInput, FormHelperText } from '@mui/material';
+import { MenuItem, Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText, TextField, Button, CircularProgress, InputAdornment, IconButton, FormControl, InputLabel, OutlinedInput, FormHelperText, Grid } from '@mui/material';
 const axios = require("axios")
 const url = SERVER_URL;
 import { UsernameContext } from '../UsernameConetxt';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 function LoginMenuItem(props) {
@@ -59,7 +59,7 @@ function LoginMenuItem(props) {
 
 
   return (
-    <Dialog open={props.loginOpen} onClose={handleClose}>
+    <Dialog open={props.loginOpen} onClose={handleClose} maxWidth="xs" fullWidth>
       <DialogTitle>Login</DialogTitle>
       <DialogContent>
         <TextField error={isNotFound} helperText={isNotFound ? "Username is not found!" : ""} variant="outlined" margin="normal" fullWidth label="Username"
@@ -67,31 +67,38 @@ function LoginMenuItem(props) {
           value={usernameCheck} >
         </TextField>
         <TextField fullWidth variant="outlined"
-
           type={showPassword ? 'text' : 'password'}
           value={passwordCheck}
           error={isCorrectPassword}
           onChange={e => setPasswordCheck(e.target.value)}
           label="Password"
           InputProps={{
-            endAdornment: 
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                edge="end"
-              >
-                {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-              </IconButton>
-            </InputAdornment>
+            endAdornment:
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  edge="end">
+                  {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                </IconButton>
+              </InputAdornment>
           }}>
         </TextField>
-        <DialogContentText>New here?</DialogContentText>
-        <Button variant="contained" onClick={() => { handleClose(); navigate("./Register") }}>Register</Button>
+        <Grid container direction={"column"} alignItems="center">
+          <Grid item>
+            <Button variant="text" onClick={() => { handleClose(); navigate("./Forgot-my-password") }}>forgot my password</Button>
+          </Grid>
+          <Grid item>
+            <DialogContentText>New here?</DialogContentText>
+          </Grid>
+          <Grid item>
+          <Button variant='outlined'  onClick={() => { handleClose(); navigate("./Register") }}>Register</Button>
+          </Grid>
+        </Grid>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={() => { login() }}>Login</Button>
+        <Button variant="contained" onClick={() => { login() }}>Sign in</Button>
       </DialogActions>
     </Dialog >
   )
