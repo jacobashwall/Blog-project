@@ -21,7 +21,6 @@ export default function Appbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [search, setSearch] = useState("");
   const [loginOpen, setLoginOpen] = useState(false);
-
   const { username, setUsername } = useContext(UsernameContext)
   const navigate = useNavigate();
 

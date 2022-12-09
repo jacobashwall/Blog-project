@@ -11,7 +11,6 @@ function SaveBlogWidget(props) {
                  if (props.add) {
                     props.updateWorkspace(current => [...current, { name: "Save Blog" }])}
                 if (!props.drag && !props.add) props.updateBlog(); 
-               
             }}>
                 <SaveIcon />
             </Fab>

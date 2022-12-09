@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState,useContext } from 'react'
 import AddPhotoAlternateTwoToneIcon from '@mui/icons-material/AddPhotoAlternateTwoTone';
 import { Tooltip, Fab, Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText, TextField, Button, CircularProgress } from '@mui/material';
 import { motion } from "framer-motion"
 const axios = require("axios")
 const url = SERVER_URL;
+import { UsernameContext } from '../../UsernameConetxt';
 
 
 function UploadImageWidget(props) {
@@ -12,6 +13,7 @@ function UploadImageWidget(props) {
   const [description, setDesciption] = useState("")
   const [file, setFile] = useState(null)
   const [isUploading, setIsUploading] = useState(false)
+  const { username, setUsername } = useContext(UsernameContext)
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -37,7 +39,7 @@ function UploadImageWidget(props) {
     formData.append("name", title);
     formData.append("image", file);
     formData.append("description", description);
-    formData.append("uploader", props.username);
+    formData.append("uploader", username);
     // Details of the uploaded file 
     console.log(file);
 

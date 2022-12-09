@@ -1,23 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef,useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import BlogBody from './BlogBody';
 import Tags from './Tags';
 const axios = require("axios")
-import SaveIcon from '@mui/icons-material/Save';
-import ImageTwoToneIcon from '@mui/icons-material/ImageTwoTone';
-import { Button, CircularProgress, FormControl, Grid, TextField, Skeleton, AppBar, Paper, Tooltip, Fab } from '@mui/material';
-import { Container } from '@mui/system';
+import {  Grid, TextField, Skeleton, Paper, Tooltip, Fab } from '@mui/material';
 import ToolsAccordion from './ToolsAccordion';
 import PanToolIcon from '@mui/icons-material/PanTool';
-import { motion, useDragControls } from "framer-motion"
 import DoNotTouchIcon from '@mui/icons-material/DoNotTouch';
 import UploadImageWidget from './UploadImageWidget';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import SaveBlogWidget from './SaveBlogWidget';
-
+import { UsernameContext } from '../../UsernameConetxt';
 function EditBlogPage() {
-    let { username, blogId } = useParams();
+    let { blogId } = useParams();
+    const { username, setUsername } = useContext(UsernameContext)
     let navigate = useNavigate();
     const [blog, setBlog] = useState();
     const [drag, setDrag] = useState(false)
@@ -25,8 +22,6 @@ function EditBlogPage() {
     const [workspace, setWorkspace] = useState([]);
     const [upload, setUploaded] = useState(true)
     const window = useRef()
-
-
     const url = SERVER_URL;
     useEffect(() => {
         getBlogById();
@@ -67,7 +62,7 @@ function EditBlogPage() {
         <Grid container columnSpacing={4} direction='row' justifyContent="center" alignItems="stretch" sx={{ paddingTop: "0" }}>
             <Grid item xs={3} sm={3} md={3} lg={3} xl={3} >
                 <Paper elevation={20} sx={{ height: "100%" }}>
-                    <ToolsAccordion updateBlog={updateBlog} username={username} drag={false} setUploaded={setUploaded} updateWorkspace={setWorkspace} add={add}  upload={upload}  />
+                    <ToolsAccordion updateBlog={updateBlog} drag={false} setUploaded={setUploaded} updateWorkspace={setWorkspace} add={add}  upload={upload}  />
                 </Paper>
             </Grid>
             {
@@ -117,9 +112,9 @@ function EditBlogPage() {
                     </Tooltip>
                     {workspace.map((widget, key) => {
                         if (widget.name == "Upload Image")
-                            return (<UploadImageWidget drag={drag} username={username} key={key} updateWorkspace={setWorkspace} updateUpload={setUploaded} upload={upload} window={window} add={add} />)
+                            return (<UploadImageWidget drag={drag}  key={key} updateWorkspace={setWorkspace} updateUpload={setUploaded} upload={upload} window={window} add={add} />)
                         if (widget.name == "Save Blog")
-                            return (<SaveBlogWidget drag={drag} username={username} key={key} updateWorkspace={setWorkspace} updateBlog={setBlog}  window={window} add={add} />)
+                            return (<SaveBlogWidget drag={drag} key={key} updateWorkspace={setWorkspace} updateBlog={setBlog}  window={window} add={add} />)
                     })}
                 </Paper>
             </Grid>

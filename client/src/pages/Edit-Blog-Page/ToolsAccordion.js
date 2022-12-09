@@ -5,12 +5,7 @@ import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
-import SaveIcon from '@mui/icons-material/Save';
-import ImageTwoToneIcon from '@mui/icons-material/ImageTwoTone';
 import { useNavigate } from 'react-router-dom';
-import { Button, Tooltip, Fab } from '@mui/material';
-import { motion } from 'framer-motion'
-import AddPhotoAlternateTwoToneIcon from '@mui/icons-material/AddPhotoAlternateTwoTone';
 import UploadImageWidget from './UploadImageWidget';
 import SaveBlogWidget from './SaveBlogWidget';
 
@@ -65,8 +60,8 @@ export default function ToolsAccordion(props) {
           <Typography>Collapsible Group Item #1</Typography>
         </AccordionSummary>
         <AccordionDetails>
-        <UploadImageWidget drag={props.drag} username={props.username} updateUpload={props.setUploaded} upload={props.upload} window={null} add={props.add} updateWorkspace={props.updateWorkspace} />
-        <SaveBlogWidget drag={props.drag} username={props.username} updateWorkspace={props.updateWorkspace} updateBlog={props.updateBlog}  window={null} add={props.add} />
+        <UploadImageWidget drag={props.drag}  updateUpload={props.setUploaded} upload={props.upload} window={null} add={props.add} updateWorkspace={props.updateWorkspace} />
+        <SaveBlogWidget drag={props.drag} updateWorkspace={props.updateWorkspace} updateBlog={props.updateBlog}  window={null} add={props.add} />
         </AccordionDetails>
       </Accordion>
       <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>

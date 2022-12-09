@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useContext } from 'react'
 const axios=require("axios")
+import { UsernameContext } from '../../UsernameConetxt';
 
 function Comments(props) {
     const [comments, setComments] = useState(props.comments);
+    const { username, setUsername } = useContext(UsernameContext)
     const url = SERVER_URL;
-    const username=props.username
+
     
     //since react setState uses queues and doesnt update instantly,we are forced to use useEffect, so the component would render anytime the state changes
     useEffect(()=>{

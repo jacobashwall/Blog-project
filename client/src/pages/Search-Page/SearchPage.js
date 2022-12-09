@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { UsernameContext } from '../../UsernameConetxt';
 import axios from 'axios';
 function SearchPage() {
-  let { username, tag } = useParams();
+  const { username, setUsername } = useContext(UsernameContext)
+  let {tag } = useParams();
   const url = SERVER_URL;
   const [searchedBlogs, setSearchedBlogs] = useState([])
   const navigate=useNavigate()

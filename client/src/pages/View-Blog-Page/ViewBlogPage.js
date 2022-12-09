@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Comments from './Comments';
 import BlogBodyView from './ViewBlogBody';
+import { UsernameContext } from '../../UsernameConetxt';
 const axios = require("axios");
 
 function ViewBlogPage() {
-    let { username, blogId } = useParams();
+    let { blogId } = useParams();
+    const { username, setUsername } = useContext(UsernameContext)
     const [blog, setBlog] = useState(null)
     let navigate = useNavigate();
     const url = SERVER_URL;
@@ -40,7 +42,7 @@ function ViewBlogPage() {
                     })}
                     <BlogBodyView blogBody={blog.body} />
                     <button disabled={blog.author != username} onClick={() => navigate(`../${blog.author}/${blog._id}/Edit`)}>Edit</button>
-                    <Comments comments={blog.comments} username={username} updateBlog={setBlog} />
+                    <Comments comments={blog.comments} updateBlog={setBlog} />
                 </div>)
                 :
                 (<p>Loading Blog...</p>)
