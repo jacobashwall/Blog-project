@@ -35,7 +35,6 @@ function LoginMenuItem(props) {
           setUsername(usernameCheck);
           setIsNotFound(false)
           setIsCorrectPassword(false)
-          navigate(`./${usernameCheck}/Main`);
         }
         else {
           if (pass == "username not found") {

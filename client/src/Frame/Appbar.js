@@ -9,12 +9,13 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useNavigate } from 'react-router-dom'
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Tooltip } from '@mui/material';
 import { UsernameContext } from '../UsernameConetxt';
 import LoginMenuItem from './LoginMenuItem';
+import BookIcon from '@mui/icons-material/Book';
+import CollectionsIcon from '@mui/icons-material/Collections';
 
 
 export default function Appbar() {
@@ -63,29 +64,42 @@ export default function Appbar() {
             </div>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: 'flex' }}>
-              <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                <Badge badgeContent={4} color="error">
-                  <MailIcon />
-                </Badge>
-              </IconButton>
-              <IconButton
-                size="large"
-                aria-label="show 17 new notifications"
-                color="inherit">
-                <Badge badgeContent={17} color="error">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-              <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit">
-                <AccountCircle />
-              </IconButton>
+              {username &&
+                <div>
+                   <Tooltip title="My images">
+                    <IconButton size="large" color="inherit" onClick={()=>{  navigate(`./${username}/Images`);}}>
+                      <CollectionsIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="My blogs">
+                    <IconButton size="large" color="inherit" onClick={()=>{  navigate(`./${username}/Main`);}}>
+                      <BookIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Notifications">
+                    <IconButton
+                      size="large"
+                      aria-label="show 17 new notifications"
+                      color="inherit">
+                      <Badge badgeContent={17} color="error">
+                        <NotificationsIcon />
+                      </Badge>
+                    </IconButton>
+                  </Tooltip>
+                </div>
+              }
+              <Tooltip title="Profile">
+                <IconButton
+                  size="large"
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit">
+                  <AccountCircle />
+                </IconButton>
+              </Tooltip>
             </Box>
           </Toolbar>
         </AppBar>
@@ -108,7 +122,7 @@ export default function Appbar() {
             username ?
               <div>
                 <MenuItem onClick={handleMenuClose}>{"My account " + username}</MenuItem>
-                <MenuItem onClick={()=>{handleMenuClose();setUsername(null);/*if not auto open login box after sign out setLoginOpen(false)*/}}>Sign out</MenuItem>
+                <MenuItem onClick={() => { handleMenuClose(); setUsername(null);/*if not auto open login box after sign out setLoginOpen(false)*/ }}>Sign out</MenuItem>
               </div>
               :
               <div>
