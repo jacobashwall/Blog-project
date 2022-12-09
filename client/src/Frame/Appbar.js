@@ -12,7 +12,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useNavigate } from 'react-router-dom'
-import { Button, TextField, Dialog, DialogActions, DialogTitle, DialogContent } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import { UsernameContext } from '../UsernameConetxt';
 import LoginMenuItem from './LoginMenuItem';
 
@@ -34,17 +34,13 @@ export default function Appbar() {
     setAnchorEl(null);
   };
 
-  const handleDialogClose = () => { setLoginOpen(false); console.log(typeof (loginOpen)) }
-
   const menuId = 'primary-search-account-menu';
 
 
 
   return (
     <div>
-
       <Box sx={{ flexGrow: 1 }}>
-
         <AppBar position="fixed">
           <Toolbar>
             <IconButton
@@ -52,23 +48,20 @@ export default function Appbar() {
               edge="start"
               color="inherit"
               aria-label="open drawer"
-              sx={{ mr: 2 }}
-            >
+              sx={{ mr: 2 }}>
               <MenuIcon />
             </IconButton>
             <Typography
               variant="h6"
               noWrap
               component="div"
-              sx={{ display: { xs: 'none', sm: 'block' } }}
-            >
-              MUI
+              sx={{ display: { xs: 'none', sm: 'block' } }}>
+              BlogSite
             </Typography>
             <div>
               <TextField variant="outlined" placeholder='Search' onChange={e => { setSearch(e.target.value); }} value={search} style={{ background: "white" }} size="small"></TextField>
               <Button variant='contained' onClick={() => { navigate(link) }}>Search</Button>
             </div>
-
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: 'flex' }}>
               <IconButton size="large" aria-label="show 4 new mails" color="inherit">
@@ -79,8 +72,7 @@ export default function Appbar() {
               <IconButton
                 size="large"
                 aria-label="show 17 new notifications"
-                color="inherit"
-              >
+                color="inherit">
                 <Badge badgeContent={17} color="error">
                   <NotificationsIcon />
                 </Badge>
@@ -92,8 +84,7 @@ export default function Appbar() {
                 aria-controls={menuId}
                 aria-haspopup="true"
                 onClick={handleProfileMenuOpen}
-                color="inherit"
-              >
+                color="inherit">
                 <AccountCircle />
               </IconButton>
             </Box>
@@ -106,7 +97,6 @@ export default function Appbar() {
             vertical: 'top',
             horizontal: 'right',
           }}
-
           id={menuId}
           keepMounted
           transformOrigin={{
@@ -114,8 +104,7 @@ export default function Appbar() {
             horizontal: 'right',
           }}
           open={Boolean(anchorEl)}
-          onClose={handleMenuClose}
-        >
+          onClose={handleMenuClose}>
           {
             username ?
               <div>
@@ -129,25 +118,9 @@ export default function Appbar() {
               </div>
           }
         </Menu>
-
       </Box>
     </div>
   );
 }
 
 
-/*
-
-const Toolbar=()=> {
-  
-    return(
-        <nav className="toolBar">
-        <a href="./Settings" ><img src={settingsIcon} className="settings-icon" alt="" /> </a>
-        <a href="/">Home</a>
-        <a href="./Register">Register</a>
-        <a href="./About-Us">About-Us</a>
-      </nav>
-    )
-}
-export default Toolbar;
-*/
