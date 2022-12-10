@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 const axios = require("axios")
-import { TextField, Button, CircularProgress, Typography, Select, MenuItem, Card, CardActions, CardHeader, CardContent, ImageList, ImageListItem, ImageListItemBar } from '@mui/material'
+import { TextField, Button, CircularProgress, Typography, Select, MenuItem, Card, CardActions, CardHeader, CardContent, ImageList, ImageListItem, ImageListItemBar, Skeleton, Grid } from '@mui/material'
 import { UsernameContext } from '../../UsernameConetxt';
 import ViewImage from './ViewImage';
 import IconButton from '@mui/material/IconButton';
@@ -12,7 +12,7 @@ function ImagesPage() {
   const [file, setFile] = useState(null)
   const [isUploading, setIsUploading] = useState(false)
   const [findImageId, setfindImageId] = useState("")
-  const [images, setImages] = useState([])
+  const [images, setImages] = useState(null)
   const { username, setUsername } = useContext(UsernameContext)
   const url = SERVER_URL;
 
@@ -55,14 +55,28 @@ function ImagesPage() {
     getImages();
   }, [])
 
+  function FormRow() {
+    return (
+      <React.Fragment>
+        <Grid item >
+          <Skeleton sx={{height:"500px",width:"260px"}}></Skeleton>
+        </Grid>
+        <Grid item>
+          <Skeleton  sx={{height:"500px",width:"260px"}}></Skeleton>
+        </Grid>
+        <Grid item>
+          <Skeleton  sx={{height:"500px",width:"260px"}}></Skeleton>
+        </Grid>
+      </React.Fragment>
+    );
+  }
+
   return (
-    <Container sx={{width:'50%' }}>
+    <Container maxWidth="md">
       <Card>
-        <CardHeader>
-          <Typography>Upload Image</Typography>
-        </CardHeader>
-        <br></br>
         <CardContent>
+        <Typography>Upload Image</Typography>
+        <br></br>
           <TextField variant="standard" margin="normal" label="Title"
             onChange={e => { setTitle(e.target.value); }}
             value={title}>
@@ -75,8 +89,8 @@ function ImagesPage() {
             value={description}>
           </TextField>
         </CardContent>
-        <CardActions>
-          <Button onClick={onFileUpload}>
+    
+          <Button variant='contained' onClick={onFileUpload}>
             {
               isUploading ?
                 <CircularProgress />
@@ -84,14 +98,13 @@ function ImagesPage() {
                 "Upload!"
             }
           </Button>
-        </CardActions>
+      
       </Card>
 
       <Card>
-        <CardHeader>
-          <Typography>Find image</Typography>
-        </CardHeader>
         <CardContent>
+        <Typography>Find Image</Typography>
+        <br></br>
           <Select
             value={findImageId}
             onChange={e => { setfindImageId(e.target.value) }}>
@@ -111,29 +124,44 @@ function ImagesPage() {
                 </MenuItem>
             }
           </Select>
-          <ViewImage imageId={findImageId} num={"find"}/>
+          <ViewImage imageId={findImageId} num={"find"} />
         </CardContent>
       </Card>
 
-      <Typography>Uploaded Images</Typography>
-      <ImageList  variant="masonry" cols={3} gap={8}>
-        {
-          images.map((image, key) => {
-            return (
-              <ImageListItem key={image._id} >
-                <ViewImage key={key} imageId={image._id} num={key} />
-                <ImageListItemBar
-                  title={image.name}
-                  subtitle={image.desc}   
-                />
-              </ImageListItem>
-            )
-          })
-        }
-      </ImageList>
+      {
+        images ?
+          <ImageList variant="masonry" cols={3} gap={8}>
+            {
+              images.map((image, key) => {
+                return (
+                  <ImageListItem key={image._id} >
+                    <ViewImage key={key} imageId={image._id} num={key} />
+                    <ImageListItemBar
+                      title={image.name}
+                      subtitle={image.desc}
+                    />
+                  </ImageListItem>
+                )
+              })
+            }
+          </ImageList>
+          :
+          <Grid container >
+            <Grid container item spacing={1} justifyContent="space-between">
+              <FormRow />
+            </Grid>
+            <Grid container item spacing={1} justifyContent="space-between">
+              <FormRow />
+            </Grid>
+            <Grid container item spacing={1} justifyContent="space-between">
+              <FormRow />
+            </Grid>
+          </Grid>
+      }
     </Container>
-
   )
 }
+
+
 
 export default ImagesPage
