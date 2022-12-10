@@ -11,7 +11,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useNavigate } from 'react-router-dom'
-import { Button, TextField, Tooltip } from '@mui/material';
+import { Button, Drawer, TextField, Tooltip } from '@mui/material';
 import { UsernameContext } from '../UsernameConetxt';
 import LoginMenuItem from './LoginMenuItem';
 import BookIcon from '@mui/icons-material/Book';
@@ -22,6 +22,7 @@ export default function Appbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [search, setSearch] = useState("");
   const [loginOpen, setLoginOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const { username, setUsername } = useContext(UsernameContext)
   const navigate = useNavigate();
 
@@ -48,9 +49,15 @@ export default function Appbar() {
               edge="start"
               color="inherit"
               aria-label="open drawer"
-              sx={{ mr: 2 }}>
+              sx={{ mr: 2 }}
+              onClick={()=>{setDrawerOpen(!drawerOpen)}}>
               <MenuIcon />
             </IconButton>
+            <Drawer anchor='left' open={drawerOpen} onClose={()=>setDrawerOpen(false)}>
+              <Box p={2} width="250px" textAlign="center" role="presentation">
+                <Typography>hi</Typography>
+              </Box>
+            </Drawer>
             <Typography
               variant="h6"
               noWrap
