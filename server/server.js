@@ -51,6 +51,7 @@ app.use(function (req, res, next) {
 });
 // calling body-parser to handle the Request Object from POST requests
 var bodyParser = require('body-parser');
+const { updateOne } = require('./models/Usermodel');
 // parse application/json, basically parse incoming Request Object as a JSON Object 
 app.use(bodyParser.json());
 // parse application/x-www-form-urlencoded, basically can only parse incoming Request Object if strings or arrays
@@ -62,13 +63,26 @@ app.get("/api", (req, res) => {
   res.json({ "users": ["server is connected"] })
 })
 
+/*
+const newUser = new User({
+  username: "1",
+  password: "1",
+  email:"1",
+  doMail:true,
+  birthDate: "2022",
+  readLater: []
+});
+newUser.save();
+*/
+
 app.post("/new-user", (req, res) => {
   const newUser = new User({
     username: req.body.username,
     password: req.body.password,
     email: req.body.email,
     doMail: req.body.doMail,
-    birthDate: req.body.birthDate
+    birthDate: req.body.birthDate,
+    readLater: []
   });
   newUser.save();
 })
@@ -228,7 +242,7 @@ app.post('/upload', upload.single("image"), (req, res) => {
     desc: req.body.description,
     uploader: req.body.uploader
   });
-  saveImage.save().then((r) =>  res.send("image is saved")).catch((err) => console.log(err));
+  saveImage.save().then((r) => res.send("image is saved")).catch((err) => console.log(err));
 
 })
 
@@ -297,12 +311,12 @@ app.post("/edit-blog-by-id", async (req, res) => {
         body: updatedBlog.body
       }
     },
-    function(err, doc){
-      if(err){
+    function (err, doc) {
+      if (err) {
         console.log("Something wrong when updating data!");
       }
       console.log(doc);
-      }
+    }
   );
   res.send("Sent")
 })
@@ -313,7 +327,7 @@ app.post("/new-blog", (req, res) => {
     subheader: "A fresh new blog for you!",
     author: req.body.username,
     date: Date.now(),
-    tags:[req.body.username,],
+    tags: [req.body.username,],
     body: [{
       title: "Title",
       imageId: "Image ID",
@@ -326,4 +340,36 @@ app.post("/new-blog", (req, res) => {
   });
   newBlog.save();
   res.send(newBlog);
+})
+
+
+app.post("/add-read-later-by-username", (req, res) => {
+  if (req.body.isChecked == true) {
+    User.findOneAndUpdate({ username: req.body.username }, { $push: { readLater: req.body.blogId } },
+      (err, result) => {
+        if (err)
+          res.send(err)
+        else{
+          console.log("Added")
+          res.send(result)
+        }
+      })
+  }
+  else {
+    User.findOneAndUpdate({ username: req.body.username }, { $pull: { readLater: req.body.blogId } },
+      (err, result) => {
+        if (err)
+          res.send(err)
+        else{
+          console.log("removed")
+          res.send(result)
+        }
+      })
+  }
+})
+
+app.post("/get-read-later-by-username", async (req, res) => {
+  const user = await User.findOne({ username: req.body.username})
+  console.log(user.readLater)
+  res.send(user.readLater)
 })

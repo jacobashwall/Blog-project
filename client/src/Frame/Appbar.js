@@ -50,10 +50,10 @@ export default function Appbar() {
               color="inherit"
               aria-label="open drawer"
               sx={{ mr: 2 }}
-              onClick={()=>{setDrawerOpen(!drawerOpen)}}>
+              onClick={() => { setDrawerOpen(!drawerOpen) }}>
               <MenuIcon />
             </IconButton>
-            <Drawer anchor='left' open={drawerOpen} onClose={()=>setDrawerOpen(false)}>
+            <Drawer anchor='left' open={drawerOpen} onClose={() => setDrawerOpen(false)}>
               <Box p={2} width="250px" textAlign="center" role="presentation">
                 <Typography>hi</Typography>
               </Box>
@@ -67,19 +67,19 @@ export default function Appbar() {
             </Typography>
             <div>
               <TextField variant="outlined" placeholder='Search' onChange={e => { setSearch(e.target.value); }} value={search} style={{ background: "white" }} size="small"></TextField>
-              <Button variant='contained' onClick={() => { navigate(link) }}>Search</Button>
+              <Button variant='contained' onClick={() => { if (search != "") navigate(link) }}>Search</Button>
             </div>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: 'flex' }}>
               {username &&
                 <div>
-                   <Tooltip title="My images">
-                    <IconButton size="large" color="inherit" onClick={()=>{  navigate(`./${username}/Images`);}}>
+                  <Tooltip title="My images">
+                    <IconButton size="large" color="inherit" onClick={() => { navigate(`./${username}/Images`); }}>
                       <CollectionsIcon />
                     </IconButton>
                   </Tooltip>
                   <Tooltip title="My blogs">
-                    <IconButton size="large" color="inherit" onClick={()=>{  navigate(`./${username}/Main`);}}>
+                    <IconButton size="large" color="inherit" onClick={() => { navigate(`./${username}/Main`); }}>
                       <BookIcon />
                     </IconButton>
                   </Tooltip>

@@ -11,15 +11,17 @@ function Tags(props) {
     };
 
     const updateTagTitle = (givenKey, givenTagTitle) => {
-        setTags(current =>
-            current.map((obj, key) => {
-                if (key === givenKey) {
-                    return givenTagTitle;
-                }
+        if (givenTagTitle[givenTagTitle.length - 1] != " ") {
+            setTags(current =>
+                current.map((obj, key) => {
+                    if (key === givenKey) {
+                        return givenTagTitle;
+                    }
 
-                return obj;
-            }),
-        );
+                    return obj;
+                }),
+            );
+        }
     };
 
     //since react setSatte uses queues and doesnt update instantly,we are forced to use useEffect, so the component would render anytime the state changes
@@ -44,8 +46,9 @@ function Tags(props) {
             {
                 tags.map((tag, key) => {
                     return (
-                        <div key={key} style={{display:"inline-block"}} >
+                        <div key={key} style={{ display: "inline-block" }} >
                             <TextField variant="filled" size="small" label="Tag"
+                                inputProps={{ maxLength: 12 }}
                                 onChange={e => { updateTagTitle(key, e.target.value); }}
                                 value={tag}
                                 disabled={key == 0}>
