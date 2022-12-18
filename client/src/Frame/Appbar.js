@@ -135,6 +135,7 @@ export default function Appbar() {
               <div>
                 <MenuItem onClick={() => { handleMenuClose(); setLoginOpen(true); }}>Login</MenuItem>
                 <LoginMenuItem loginOpen={loginOpen} setLoginOpen={setLoginOpen} />
+                <MenuItem onClick={() => { handleMenuClose();navigate('../Register') }}>Register</MenuItem>
               </div>
           }
         </Menu>

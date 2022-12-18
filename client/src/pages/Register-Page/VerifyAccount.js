@@ -1,11 +1,13 @@
+import { Alert, Button, Paper, Typography, AlertTitle, TextField } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 const axios = require("axios");
 import Reaptcha from 'reaptcha';
 
 function VerifyAccount(props) {
-  const [verificationCode, setVarificationCode] = useState("Verification Code");
-  const [codeColor, setCodeColor] = useState("grey");
+  const [verificationCode, setVarificationCode] = useState("");
   const [isHuman, setIsHuman] = useState(false);
+  const [isAccessing, setAccessing] = useState(false)
+  const [isNotValid, setIsNotValid] = useState(false)
   const url = SERVER_URL;
   const captchaSiteKey = "6Ld9CJchAAAAAAilSyF7kvbpzM8nrVsbmgWpmgYq";
 
@@ -32,45 +34,55 @@ function VerifyAccount(props) {
   }
 
   function submit(e) {
-    if(isHuman){
-    axios.post(`${url}/email-verification-check-code`,
-      {
-        username: props.username,
-        email: props.email,
-        code: verificationCode
-      })
-      .then((response) => {
-        console.log(response.data)
-        if (response.data == true) {
-          props.submitInfo();
+    setAccessing(true)
+    if (isHuman) {
+      axios.post(`${url}/email-verification-check-code`,
+        {
+          username: props.username,
+          email: props.email,
+          code: verificationCode
+        })
+        .then((response) => {
+          console.log(response.data)
+          if (response.data == true) {
+            props.submitInfo();
+          }
+          else {
+            setIsNotValid(true)
+          }
+        })
+        .catch((error) => {
+          console.log(error);
         }
-        else {
-          setVarificationCode("Invalid code");
-          setCodeColor("firebrick")
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      }
-      );
-    }
-    else{
-      setVarificationCode("Beep Boop, you are a robot.");
-      setCodeColor("firebrick")
+        );
     }
   }
   return (
-    <div>
-      <p>Verification code has been sent to your mail:</p>
-      <p>{props.email}</p>
-      <input onChange={e => { setVarificationCode(e.target.value); setCodeColor('white') }} value={verificationCode} onFocus={e => { if (verificationCode === "Verification Code" || verificationCode === "Invalid code" || verificationCode === "Beep Boop, you are a robot.") setVarificationCode("") }} onBlur={e => { if (e.target.value === "") { setVarificationCode("Verification Code"); setCodeColor('grey') } }} style={{ color: codeColor }}></input>
-      <Reaptcha sitekey={captchaSiteKey} onVerify={onVerify} theme={'dark'} />
-      <button onClick={submit}>submit</button>
-      <p><b>I dident get any mail!</b></p>
-      <p>Please check your spam.</p>
-      <p>or</p>
-      <button onClick={sendMail}>resend mail</button>
-    </div>
+    <Paper sx={{ minWidth: 500, minHeight: 500 }}>
+      <Typography>Verification code has been sent to your mail:</Typography>
+      <Typography>{props.email}</Typography>
+      <TextField
+        error={isNotValid}
+        helperText={isNotValid ? "Invalid varification code!" : ""}
+        variant="filled"
+        onChange={e => { setVarificationCode(e.target.value) }}
+        value={verificationCode}
+        label="Verification code">
+      </TextField>
+      <Reaptcha sitekey={captchaSiteKey} onVerify={onVerify} />
+      {((!isHuman) && isAccessing) &&
+        <Alert severity="error">
+          <AlertTitle>Beep Boop</AlertTitle>
+          <strong>You are a robot!</strong>
+        </Alert>
+      }
+      <Button variant="contained" onClick={submit}>submit</Button>
+      <br></br>
+      <Typography>I did not get any mail!</Typography>
+      <Typography>Please check your spam.</Typography>
+      <Typography>or</Typography>
+      <Button onClick={sendMail}>resend mail</Button>
+    </Paper>
   )
 }
 

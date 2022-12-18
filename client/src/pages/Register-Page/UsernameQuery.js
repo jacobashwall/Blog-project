@@ -1,45 +1,53 @@
-import React, { useState } from 'react'
-const axios=require("axios")
+import { Paper, TextField, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react'
+const axios = require("axios")
 const url = SERVER_URL
 
 function NameQuery(props) {
-  const [userNameColor, setUserNameColor] = useState("grey");
-  const [userName, setUserName] = useState(props.username);
-  function nextStep() {
-    if (userName.includes(" ")) {//maybe add more special characters
-      setUserName("Enter a valid username");
-      setUserNameColor("firebrick");
+  const [isAlreadyExist, setIsAlreadyExist] = useState(false)
+  const [isNotValid, setIsNotValid] = useState(false)
+
+  useEffect(() => { props.setCanContinue(false) }, [])
+
+  function checkUsername() {
+    if (props.username.includes(" ") || props.username == "") {//maybe add more special characters
+      setIsNotValid(true);
     }
     else {//check if username already exist in database
+      setIsNotValid(false)
       axios.post(`${url}/new-user-username-check`,
-      {
-        username: userName,
-      })
-      .then((response) => {
-        let isExist=response.data;
-        console.log(isExist);
-        if (isExist) {
-          setUserName("Username already exist!");
-          setUserNameColor("firebrick");
-        }
-        else {
-          props.submitUsername(userName);
-          props.nextStep();
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        {
+          username: props.username,
+        })
+        .then((response) => {
+          let isExist = response.data;
+          console.log(isExist);
+          if (!isExist) {
+            setIsAlreadyExist(false)
+            props.setCanContinue(true)
+          }
+          else {
+            setIsAlreadyExist(true);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }
   return (
-    <div>
-      <p className='header'>Username:</p>
-      <p>
-        <input onChange={e => { setUserName(e.target.value); setUserNameColor('white') }} value={userName} onFocus={e => { if (userName === "User Name" || userName === "Username already exist!" || userName === "Enter a valid username") setUserName("") }} onBlur={e => { if (e.target.value === "") { setUserName("User Name"); setUserNameColor('grey') } }} style={{ color: userNameColor }}></input>
-      </p>
-      <button onClick={nextStep}>next</button>
-    </div>
+    <Paper sx={{minWidth:500, minHeight:500}}>
+      <Typography>Choose a username:</Typography>
+      <TextField
+        error={isNotValid || isAlreadyExist}
+        helperText={(isNotValid ? "Please enter a valid username!" : (isAlreadyExist ? "Username already exists!" : ""))}
+        variant="filled"
+        onChange={e => { props.setUsername(e.target.value) }}
+        onBlur={checkUsername}
+        value={props.username}
+        label="Username">
+      </TextField>
+    </Paper>
   )
 }
 

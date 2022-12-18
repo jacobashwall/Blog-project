@@ -85,6 +85,7 @@ app.post("/new-user", (req, res) => {
     readLater: []
   });
   newUser.save();
+  res.send("new user added")
 })
 
 app.post("/new-user-username-check", (req, res) => {

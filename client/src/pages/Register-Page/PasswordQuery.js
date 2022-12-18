@@ -1,41 +1,81 @@
-import React, { useState } from 'react'
+import { Paper, Typography, TextField, InputAdornment, IconButton } from '@mui/material';
+import React, { useState, useEffect } from 'react'
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 function PasswordQuery(props) {
-    const [password1Color, setPassword1Color] = useState("grey");
-    const [password2Color, setPassword2Color] = useState("grey");
-    const [password1, setPassword1] = useState(props.password);
-    const [password2, setPassword2] = useState(props.password);
-    function nextStep() {
-        if (password1.includes(" ")) {
-            setPassword1("Enter a valid password");
-            setPassword1Color("firebrick");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [isNotValid, setIsNotValid] = useState(true)
+    const [isNotIdentical, setIsNotIdentical] = useState(true)
+    const [showPassword, setShowPassword] = useState(false)
+    const [showConfrimPassword, setShowConfirmPassword] = useState(false)
+    useEffect(() => { props.setCanContinue(!(isNotValid || isNotIdentical)) }, [isNotValid, isNotIdentical])
+    useEffect(() => { checkIsNotValid() }, [props.password])
+    useEffect(() => { checkIsNotIdentical() }, [confirmPassword])
+
+    const checkIsNotValid = () => {
+        if (props.password.includes(" ") || props.password === "") {
+            setIsNotValid(true)
         }
         else {
-            if (password1 != password2) {
-                setPassword2("Passwords do not match!");
-                setPassword2Color("firebrick");
-            } else {
-                props.submitPassword(password1);
-                props.nextStep();
-            }
+            setIsNotValid(false)
         }
-    } 
-    function previousStep() {
-        props.previousStep();
     }
+
+    const checkIsNotIdentical = () => {
+        if (confirmPassword != props.password) {
+            setIsNotIdentical(true)
+        }
+        else {
+            setIsNotIdentical(false)
+        }
+    }
+
     return (
-        <div>
-            <p className='header'>Password:</p>
-            <p>
-                <input onChange={e => { setPassword1(e.target.value); setPassword1Color('white') }} value={password1} onFocus={e => { if (password1 === "Password" || password1 === "Enter a valid password") setPassword1("") }} onBlur={e => { if (e.target.value === "") { setPassword1("Password"); setPassword1Color('grey') } }} style={{ color: password1Color }}></input>
-            </p>
-            <p className='header'>Password again:</p>
-            <p>
-                <input onChange={e => { setPassword2(e.target.value); setPassword2Color('white') }} value={password2} onFocus={e => { if (password2 === "Password" || password2 === "Passwords do not match!") setPassword2("") }} onBlur={e => { if (e.target.value === "") { setPassword2("Password"); setPassword2Color('grey') } }} style={{ color: password2Color }}></input>
-            </p>
-            <button onClick={previousStep}>previous</button>
-            <button onClick={nextStep}>next</button>
-        </div>
+        <Paper sx={{minWidth:500, minHeight:500}}>
+            <Typography>Enter password:</Typography>
+            <TextField
+                type={showPassword ? 'text' : 'password'}
+                error={isNotValid && props.password != ""}
+                helperText={isNotValid && props.password != "" ? "Please enter a valid password!" : ""}
+                variant="filled"
+                onChange={e => { props.setPassword(e.target.value); }}
+                value={props.password}
+                label="Password"
+                InputProps={{
+                    endAdornment:
+                        <InputAdornment position="end">
+                            <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={() => { setShowPassword(!showPassword) }}
+                                edge="end">
+                                {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                            </IconButton>
+                        </InputAdornment>
+                }}>
+            </TextField>
+            <Typography>Please confirm your password:</Typography>
+            <TextField
+                type={showConfrimPassword ? 'text' : 'password'}
+                error={isNotIdentical && confirmPassword != ""}
+                helperText={isNotIdentical && confirmPassword != "" ? "Passwords are not identical!" : ""}
+                variant="filled"
+                onChange={e => { setConfirmPassword(e.target.value); checkIsNotIdentical() }}
+                value={confirmPassword}
+                label="Confirm Password"
+                InputProps={{
+                    endAdornment:
+                        <InputAdornment position="end">
+                            <IconButton
+                                aria-label="toggle confirm password visibility"
+                                onClick={() => { setShowConfirmPassword(!showConfrimPassword) }}
+                                edge="end">
+                                {showConfrimPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                            </IconButton>
+                        </InputAdornment>
+                }}>
+            </TextField>
+        </Paper>
     )
 }
 
