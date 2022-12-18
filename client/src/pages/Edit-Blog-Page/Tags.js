@@ -45,17 +45,17 @@ function Tags(props) {
         <div >
             {
                 tags.map((tag, key) => {
-                    return (
-                        <div key={key} style={{ display: "inline-block" }} >
-                            <TextField variant="filled" size="small" label="Tag"
-                                inputProps={{ maxLength: 12 }}
-                                onChange={e => { updateTagTitle(key, e.target.value); }}
-                                value={tag}
-                                disabled={key == 0}>
-                            </TextField>
-                            <Fab color="secondary" onClick={() => { removeTag(key) }} disabled={key == 0}><ClearIcon /></Fab>
-                        </div>
-                    )
+                    if (key != 0)
+                        return (
+                            <div key={key} style={{ display: "inline-block" }} >
+                                <TextField variant="filled" size="small" label="Tag"
+                                    inputProps={{ maxLength: 12 }}
+                                    onChange={e => { updateTagTitle(key, e.target.value.toUpperCase()); }}
+                                    value={tag}>
+                                </TextField>
+                                <Fab color="secondary" onClick={() => { removeTag(key) }}><ClearIcon /></Fab>
+                            </div>
+                        )
                 })
             }
             <Fab onClick={addTag}><AddIcon /></Fab>

@@ -21,6 +21,8 @@ import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import BookmarkOutlinedIcon from '@mui/icons-material/BookmarkOutlined';
 import LoginDialog from './LoginDialog';
+import { createTheme } from '@mui/material/styles';
+
 function SearchPage() {
   const { username, setUsername } = useContext(UsernameContext)
   let { tag } = useParams();
@@ -72,6 +74,15 @@ function SearchPage() {
     }
   }
 
+  const lowercase = createTheme({
+    typography: {
+      button: {
+        textTransform: 'none'
+      }
+    }
+  });
+
+
   function Row(props) {
     const [open, setOpen] = useState(false);
     let blogeDate = new Date(props.blog.date)
@@ -89,15 +100,20 @@ function SearchPage() {
             </Tooltip>
           </TableCell>
           <TableCell sx={{ width: 200 }}><Typography>{props.blog.header}</Typography></TableCell>
-          <TableCell align='center' sx={{ width: 100 }}><Typography>{props.blog.author}</Typography></TableCell>
+          <TableCell align='center' sx={{ width: 100 }}>
+            <Tooltip title={"Search all blogs by " + props.blog.author}>
+              <Button theme={lowercase} onClick={() => { navigate(`../${username}/Search/${props.blog.author}`) }}>{props.blog.author}</Button>
+            </Tooltip>
+          </TableCell>
           <TableCell align='center' sx={{ width: 100 }}><Typography>{blogeDate.getDay() + "/" + blogeDate.getMonth() + "/" + blogeDate.getFullYear()}</Typography></TableCell>
           <TableCell sx={{ width: 300 }}>
             {props.blog.tags.map((tag, key) => {
-              return (
-                <Tooltip key={key} title={"Search " + tag}>
-                  <Button onClick={() => { navigate(`../${username}/Search/${tag}`) }} key={key} endIcon={<LocalOfferIcon />}>{tag}</Button>
-                </Tooltip>
-              )
+              if (key != 0)
+                return (
+                  <Tooltip key={key} title={"Search all blogs tagged as " + tag}>
+                    <Button onClick={() => { navigate(`../${username}/Search/${tag}`) }} key={key} endIcon={<LocalOfferIcon />}>{tag}</Button>
+                  </Tooltip>
+                )
             }
             )}
           </TableCell>
