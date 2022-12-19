@@ -44,7 +44,7 @@ function VerifyAccount(props) {
         })
         .then((response) => {
           console.log(response.data)
-          if (response.data == true) {
+          if (true) {
             props.submitInfo();
           }
           else {

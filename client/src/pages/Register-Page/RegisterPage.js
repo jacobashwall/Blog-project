@@ -59,12 +59,12 @@ function RegisterPage() {
 
   }
   const queries = [
-    <Greetings />,
+    <Greetings handleNext={handleNext}/>,
     <UsernameQuery username={newUsername} setUsername={setNewUsername} setCanContinue={setCanContinue} />,
     <PasswordQuery password={password} setPassword={setPassword} setCanContinue={setCanContinue} />,
     <BirthDateQuery day={birthDateDay} month={birthDateMonth} year={birthDateYear} setDay={setBirthDateDay} setMonth={setBirthDateMonth} setYear={setBirthDateYear} setCanContinue={setCanContinue} />,
     <EmailQuery email={email} setEmail={setEmail} setDoMail={setDoMail} doMail={doMail} setCanContinue={setCanContinue} />,
-    <VerifyAccount email={email} username={newUsername} submitInfo={submitInfo} handleNext={handleNext} />,
+    <VerifyAccount email={email} username={newUsername} submitInfo={submitInfo} />,
     <Summerize />
   ];
   return (
@@ -77,23 +77,15 @@ function RegisterPage() {
           </Step>
         ))}
       </Stepper>
-      <div className='register-box' >
-        {queries[activeStep]}
-        <br></br>
-        <a href='./'>already have an account?</a>
-      </div>
-      {
-        (activeStep == 0) &&
-        <Button onClick={handleNext} sx={{ mr: 1 }}>
-          Start
-        </Button>
-      }
+      {queries[activeStep]}
       {
         (activeStep >= 1 && activeStep <= 4) &&
         <Button onClick={handleNext} sx={{ mr: 1 }} disabled={!canContinue}>
           Next
         </Button>
       }
+      <br></br>
+      <Button onClick={()=>navigate('../')}>already have an account?</Button>
     </div >
   )
 }
