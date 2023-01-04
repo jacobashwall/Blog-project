@@ -1,4 +1,5 @@
 import { Paper, TextField, Typography } from '@mui/material';
+import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react'
 const axios = require("axios")
 const url = SERVER_URL
@@ -36,7 +37,7 @@ function NameQuery(props) {
     }
   }
   return (
-    <Paper sx={{minWidth:500, minHeight:500}}>
+    <Paper sx={{minWidth:500, minHeight:500}} component={motion.div} initial={{ x: "100vw" }} animate={{x:0}} exit={{ x: "-100vw" }} key={props.key}>
       <Typography>Choose a username:</Typography>
       <TextField
         error={isNotValid || isAlreadyExist}

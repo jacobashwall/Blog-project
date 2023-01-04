@@ -62,7 +62,7 @@ function LoginMenuItem(props) {
  
   return (
 
-      <Dialog open={props.loginOpen} onClose={handleClose} maxWidth="xs" fullWidth component={motion.div} initial={{ y: "-100vh" }} animate={{ y: 0 }} exist={{ y: "-100vh" }} >
+      <Dialog key={1} open={props.loginOpen} onClose={handleClose} maxWidth="xs" fullWidth component={motion.div} initial={{ y: "-100vh" }} animate={{ y: 0 }} exist={{ y: "-100vh" }} >
         <DialogTitle>Login</DialogTitle>
         <DialogContent >
           <TextField error={isNotFound} helperText={isNotFound ? "Username is not found!" : ""} variant="outlined" margin="normal" fullWidth label="Username"

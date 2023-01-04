@@ -1,4 +1,5 @@
 import { Alert, Button, Paper, Typography, AlertTitle, TextField } from '@mui/material';
+import { motion } from 'framer-motion';
 import React, { useState, useEffect } from 'react';
 const axios = require("axios");
 import Reaptcha from 'reaptcha';
@@ -58,7 +59,7 @@ function VerifyAccount(props) {
     }
   }
   return (
-    <Paper sx={{ minWidth: 500, minHeight: 500 }}>
+    <Paper sx={{ minWidth: 500, minHeight: 500 }} component={motion.div} initial={{ x: "100vw" }} animate={{x:0}} exit={{ x: "-100vw" }} key={props.key}>
       <Typography>Verification code has been sent to your mail:</Typography>
       <Typography>{props.email}</Typography>
       <TextField

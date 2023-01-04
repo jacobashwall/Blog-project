@@ -16,6 +16,7 @@ import { UsernameContext } from '../UsernameConetxt';
 import LoginMenuItem from './LoginMenuItem';
 import BookIcon from '@mui/icons-material/Book';
 import CollectionsIcon from '@mui/icons-material/Collections';
+import { AnimatePresence } from 'framer-motion';
 
 
 export default function Appbar() {
@@ -134,8 +135,12 @@ export default function Appbar() {
               :
               <div>
                 <MenuItem onClick={() => { handleMenuClose(); setLoginOpen(true); }}>Login</MenuItem>
-                <LoginMenuItem loginOpen={loginOpen} setLoginOpen={setLoginOpen} />
-                <MenuItem onClick={() => { handleMenuClose();navigate('../Register') }}>Register</MenuItem>
+                <AnimatePresence>
+                  {loginOpen &&
+                    <LoginMenuItem loginOpen={loginOpen} setLoginOpen={setLoginOpen} />
+                  }
+                </AnimatePresence>
+                <MenuItem onClick={() => { handleMenuClose(); navigate('../Register') }}>Register</MenuItem>
               </div>
           }
         </Menu>

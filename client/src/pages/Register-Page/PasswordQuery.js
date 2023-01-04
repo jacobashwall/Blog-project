@@ -2,7 +2,7 @@ import { Paper, Typography, TextField, InputAdornment, IconButton } from '@mui/m
 import React, { useState, useEffect } from 'react'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-
+import { motion } from 'framer-motion';
 function PasswordQuery(props) {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [isNotValid, setIsNotValid] = useState(true)
@@ -32,7 +32,7 @@ function PasswordQuery(props) {
     }
 
     return (
-        <Paper sx={{minWidth:500, minHeight:500}}>
+        <Paper sx={{minWidth:500, minHeight:500}} component={motion.div} initial={{ x: "100vw" }} animate={{x:0}} exit={{ x: "-100vw" }} key={props.key}>
             <Typography>Enter password:</Typography>
             <TextField
                 type={showPassword ? 'text' : 'password'}

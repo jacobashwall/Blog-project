@@ -16,6 +16,7 @@ import { StepLabel } from '@mui/material';
 import Greetings from './Greetings';
 import Summerize from './Summerize';
 import { UsernameContext } from '../../UsernameConetxt';
+import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
 const axios = require("axios");
 
 function RegisterPage() {
@@ -59,11 +60,11 @@ function RegisterPage() {
 
   }
   const queries = [
-    <Greetings handleNext={handleNext}/>,
-    <UsernameQuery username={newUsername} setUsername={setNewUsername} setCanContinue={setCanContinue} />,
-    <PasswordQuery password={password} setPassword={setPassword} setCanContinue={setCanContinue} />,
-    <BirthDateQuery day={birthDateDay} month={birthDateMonth} year={birthDateYear} setDay={setBirthDateDay} setMonth={setBirthDateMonth} setYear={setBirthDateYear} setCanContinue={setCanContinue} />,
-    <EmailQuery email={email} setEmail={setEmail} setDoMail={setDoMail} doMail={doMail} setCanContinue={setCanContinue} />,
+    <Greetings handleNext={handleNext} key={0}/>,
+    <UsernameQuery username={newUsername} setUsername={setNewUsername} setCanContinue={setCanContinue} key={1} />,
+    <PasswordQuery password={password} setPassword={setPassword} setCanContinue={setCanContinue} key={2}/>,
+    <BirthDateQuery day={birthDateDay} month={birthDateMonth} year={birthDateYear} setDay={setBirthDateDay} setMonth={setBirthDateMonth} setYear={setBirthDateYear} setCanContinue={setCanContinue} key={3}/>,
+    <EmailQuery email={email} setEmail={setEmail} setDoMail={setDoMail} doMail={doMail} setCanContinue={setCanContinue} key={4} />,
     <VerifyAccount email={email} username={newUsername} submitInfo={submitInfo} />,
     <Summerize />
   ];
@@ -77,15 +78,19 @@ function RegisterPage() {
           </Step>
         ))}
       </Stepper>
-      {queries[activeStep]}
-      {
-        (activeStep >= 1 && activeStep <= 4) &&
-        <Button onClick={handleNext} sx={{ mr: 1 }} disabled={!canContinue}>
-          Next
-        </Button>
-      }
+      <AnimatePresence >
+        {queries[activeStep]}
+      </AnimatePresence>
+      <AnimatePresence>
+        {
+          activeStep >= 1 && activeStep <= 4 && canContinue &&
+          <Button key={1} onClick={handleNext} sx={{ mr: 1 }} component={motion.div} initial={{ y: "100vh" }} animate={{y:0}} exit={{ y: "100vh" }} disabled={!canContinue} >
+            Next
+          </Button>
+        }
+      </AnimatePresence>
       <br></br>
-      <Button onClick={()=>navigate('../')}>already have an account?</Button>
+      <Button onClick={() => navigate('../')}>already have an account?</Button>
     </div >
   )
 }
