@@ -37,9 +37,9 @@ function NameQuery(props) {
     }
   }
   return (
-    <Paper sx={{minWidth:500, minHeight:500}} component={motion.div} initial={{ x: "100vw" }} animate={{x:0}} exit={{ x: "-100vw" }} key={props.key}>
-      <Typography>Choose a username:</Typography>
-      <TextField
+    <Paper sx={{ minWidth: 500, minHeight: 500 }} component={motion.div} initial={{ x: "100vw" }} animate={{ x: 0, transition: { when: "beforeChildren", staggerChildren: 3 } }} exit={{ x: "-100vw" }} key={props.key}>
+      <Typography component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>Choose a username:</Typography>
+      <TextField component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }}
         error={isNotValid || isAlreadyExist}
         helperText={(isNotValid ? "Please enter a valid username!" : (isAlreadyExist ? "Username already exists!" : ""))}
         variant="filled"

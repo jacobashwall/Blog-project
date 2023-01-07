@@ -1,7 +1,7 @@
 import './App.css';
 import Appbar from './Frame/Appbar';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LoginPage from './pages/Login-Page/LoginPage';
+import MainPage from './pages/Main-Page/MainPage';
 import ErrorPage from './pages/Error-Page/ErrorPage';
 import RegisterPage from './pages/Register-Page/RegisterPage';
 import AboutUsPage from './pages/AboutUs-Page/AboutUsPage';
@@ -12,7 +12,7 @@ import EditBlogPage from './pages/Edit-Blog-Page/EditBlogPage';
 import ViewBlogPage from './pages/View-Blog-Page/ViewBlogPage';
 import Footer from './Frame/Footer';
 import React, { useMemo, useState } from 'react';
-import MainPage from './pages/Main-Page/MainPage';
+import DashboardPage from './pages/Dashboard-Page/DashboardPage';
 import SearchPage from './pages/Search-Page/SearchPage';
 import { UsernameContext } from "./UsernameConetxt"
 
@@ -28,12 +28,12 @@ function App() {
         <Router>
           <Appbar />
           <Routes>
-            <Route path='/' element={<LoginPage />} />
+            <Route path='/' element={<MainPage />} />
             <Route path='/Settings' element={<SettingsPage />} />
             <Route path='/Register' element={<RegisterPage />} />
             <Route path='/About-Us' element={<AboutUsPage />} />
             <Route path='/Forgot-my-password' element={<ForgotPasswordPage />} />
-            <Route path='/:username/Main' element={<MainPage />} />
+            <Route path='/:username/Main' element={<DashboardPage />} />
             <Route path='/:username/:blogId/Edit' element={<EditBlogPage />} />
             <Route path='/:username/:blogId/View' element={<ViewBlogPage />} />
             <Route path='/:username/Images' element={<ImagesPage />} />
