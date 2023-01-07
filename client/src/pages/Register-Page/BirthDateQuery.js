@@ -36,7 +36,7 @@ function BirthDateQuery(props) {
         }
     }
     return (
-        <Paper sx={{minWidth:500, minHeight:500}} component={motion.div} initial={{ x: "100vw" }} animate={{x:0}} exit={{ x: "-100vw" }} key={props.key}>
+        <Paper sx={{minWidth:500, minHeight:500}}  component={motion.div} initial={{ x: "100vw" }} animate={{x:0}} exit={{ x: "-100vw" }} key={props.key}>
             <TextField sx={{ width: "80px" }}
                 error={dayError && props.day != ""}
                 helperText={(dayError && props.day != "") ? "Invalid day!" : ""}

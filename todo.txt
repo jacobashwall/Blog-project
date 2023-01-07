@@ -9,5 +9,4 @@ delete section by click
 finssh workspace
 use redux after useconetxt
 image page card header
-fix animation register
 

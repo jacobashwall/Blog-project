@@ -39,7 +39,7 @@ function EmailQuery(props) {
   }
 
   return (
-    <Paper sx={{minWidth:500, minHeight:500}} component={motion.div} initial={{ x: "100vw" }} animate={{x:0}} exit={{ x: "-100vw" }} key={props.key}>
+    <Paper sx={{minWidth:500, minHeight:500}}  component={motion.div} initial={{ x: "100vw" }} animate={{x:0}} exit={{ x: "-100vw" }} key={props.key}>
       <TextField
         error={(isNotValid || isAlreadyExist) && (props.email != "")}
         helperText={(isNotValid && (props.email != "") ? "Please enter a valid email!" : ((isAlreadyExist && (props.email != "")) ? "Email already in use by another user!" : ""))}

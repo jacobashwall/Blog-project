@@ -32,7 +32,7 @@ function PasswordQuery(props) {
     }
 
     return (
-        <Paper sx={{minWidth:500, minHeight:500}} component={motion.div} initial={{ x: "100vw" }} animate={{x:0}} exit={{ x: "-100vw" }} key={props.key}>
+        <Paper sx={{minWidth:500, minHeight:500}}  component={motion.div} initial={{ x: "100vw" }} animate={{x:0}} exit={{ x: "-100vw" }} key={props.key}>
             <Typography>Enter password:</Typography>
             <TextField
                 type={showPassword ? 'text' : 'password'}

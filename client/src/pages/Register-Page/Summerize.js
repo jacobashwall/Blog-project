@@ -7,7 +7,7 @@ function Summerize() {
   let navigate=useNavigate()
   const { username, setUsername } = useContext(UsernameContext)
   return (
-    <Paper sx={{ minWidth: 500, minHeight: 500 }} component={motion.div} initial={{ x: "100vw" }} animate={{x:0}} key={props.key}>
+    <Paper sx={{ minWidth: 500, minHeight: 500 }}  component={motion.div} initial={{ x: "100vw" }} animate={{x:0}} key={props.key}>
       <Typography>Welcome {username}</Typography>
       <Typography>Thanks for joining our family!</Typography>
       <Typography>You can start creating right now.</Typography>

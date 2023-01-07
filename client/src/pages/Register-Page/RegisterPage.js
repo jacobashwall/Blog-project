@@ -78,10 +78,10 @@ function RegisterPage() {
           </Step>
         ))}
       </Stepper>
-      <AnimatePresence >
+      <AnimatePresence mode="wait">
         {queries[activeStep]}
       </AnimatePresence>
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {
           activeStep >= 1 && activeStep <= 4 && canContinue &&
           <Button key={1} onClick={handleNext} sx={{ mr: 1 }} component={motion.div} initial={{ y: "100vh" }} animate={{y:0}} exit={{ y: "100vh" }} disabled={!canContinue} >
