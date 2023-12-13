@@ -6,7 +6,7 @@ import { UsernameContext } from '../UsernameConetxt';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useNavigate } from 'react-router-dom';
-import { motion, useAnimation} from 'framer-motion'
+import { motion} from 'framer-motion'
 
 
 function LoginMenuItem(props) {

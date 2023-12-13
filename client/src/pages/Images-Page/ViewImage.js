@@ -1,4 +1,4 @@
-import { Box, CardMedia } from '@mui/material';
+import { CardMedia } from '@mui/material';
 import React, { useEffect } from 'react';
 const axios = require("axios")
 

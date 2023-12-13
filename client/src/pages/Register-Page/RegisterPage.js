@@ -6,17 +6,11 @@ import PasswordQuery from './PasswordQuery';
 import BirthDateQuery from './BirthDateQuery';
 import { useNavigate } from 'react-router-dom';
 import VerifyAccount from './VerifyAccount';
-import Box from '@mui/material/Box';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepButton from '@mui/material/StepButton';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { StepLabel } from '@mui/material';
+import { StepLabel, Stepper, Step, Button } from '@mui/material';
 import Greetings from './Greetings';
 import Summerize from './Summerize';
 import { UsernameContext } from '../../UsernameConetxt';
-import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 const axios = require("axios");
 
 function RegisterPage() {

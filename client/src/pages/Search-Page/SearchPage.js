@@ -1,21 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { UsernameContext } from '../../UsernameConetxt';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import axios from 'axios';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import Collapse from '@mui/material/Collapse';
-import Box from '@mui/material/Box';
-import { Button, Checkbox, Grid, Skeleton, Tooltip } from '@mui/material';
+import {Collapse,Box, Paper,Table,TableBody,TableCell,TableContainer,TableHead,TableRow, Typography,IconButton, Button, Checkbox, Grid, Skeleton, Tooltip } from '@mui/material';
 import ReadMoreIcon from '@mui/icons-material/ReadMore';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';

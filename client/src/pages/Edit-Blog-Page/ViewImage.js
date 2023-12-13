@@ -1,5 +1,5 @@
 import { CardMedia } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 const axios = require("axios")
 
 function ViewImage(props) {
